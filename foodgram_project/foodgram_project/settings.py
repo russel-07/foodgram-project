@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'app_users',
+    'app_recipes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -130,3 +131,10 @@ STATIFILES_DIRS = (os.path.join(BASE_DIR, "staticfiles"),)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIAFILES_DIRS = (os.path.join(BASE_DIR, "mediafiles"),)
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+LOGIN_URL = "/auth/login/"
+LOGIN_REDIRECT_URL = "index" 
+# LOGOUT_REDIRECT_URL = "index"

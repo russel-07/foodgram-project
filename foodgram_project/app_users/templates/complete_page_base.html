@@ -1,12 +1,13 @@
-{% extends "base_auth.html" %}
+{% extends "base.html" %}
+
 {% block title %}Регистрация{% endblock %}
+
 {% block static %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
 {% endblock %}
 
 {% block content %}
-
 <div class="custom-center-block">
         <p class="custom-text-block">
             {% block msg %}
@@ -16,10 +17,9 @@
     <div class="custom-button-block">
         <button class="button button_style_blue">
             {% block button %}
-                Перейти на главную
-            {% endblock %} 
+                <a href="{% url 'index' %}" class="nav__link link">Перейти на главную</a>
+            {% endblock %}
         </button>
     </div>
 </div>
-
 {% endblock %}
