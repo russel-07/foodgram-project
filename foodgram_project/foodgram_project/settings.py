@@ -132,9 +132,20 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIAFILES_DIRS = (os.path.join(BASE_DIR, "mediafiles"),)
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
-
 LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "index" 
 # LOGOUT_REDIRECT_URL = "index"
+
+# Эмуляция почтового сервера
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+# Настройка почтового сервера Yandex
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'russel-1707@yandex.ru'
+EMAIL_HOST_PASSWORD = 'synfhgljzqhrcdkd'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

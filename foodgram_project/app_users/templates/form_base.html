@@ -1,14 +1,8 @@
 {% load user_filters %}
 
 <style type="text/css">
-ul {
-    list-style: none;
-    padding-left: 0;
-    margin-top: 0em;
-}
-li {
-    margin-bottom: 1em;
-}​
+ul {list-style: none; padding-left: 0; margin-top: 0em;}
+li {margin-bottom: 1em;}
 </style>
 
 <div class="main__header">
@@ -20,7 +14,9 @@ li {
 
         {% csrf_token %}
          
+        {% if info %}
         <p class="form__info-text">{{ info }}</p>
+        {% endif %}
         
         {% for field in form %}
             <div class="form__group">
@@ -37,7 +33,6 @@ li {
 
         <div class="form__footer">
             <button class="button button_style_blue">{{ button }}</button>
-            {{ command }}
         </div>
 
     </form>
