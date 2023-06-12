@@ -17,3 +17,14 @@
 .form__error:empty {
     display: none;
 }
+.form__error ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0em;
+}
+.form__error ul:last-child {
+    margin-bottom: -0.75em;
+}
+.form__error li {
+    margin-bottom: 0.75em;
+}
