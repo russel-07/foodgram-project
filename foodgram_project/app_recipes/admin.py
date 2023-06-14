@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import Ingredient
+from .models import Unit, Ingredient
+
+
+@admin.register(Unit)
+class UnitAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    list_filter = ('name',)
+    empty_value_display = '-пусто-'
 
 
 @admin.register(Ingredient)

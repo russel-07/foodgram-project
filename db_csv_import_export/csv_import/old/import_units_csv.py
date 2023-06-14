@@ -10,7 +10,6 @@ def import_csv_to_db(from_file_path, to_db_name, to_table_name):
     with open(from_file_path, 'r', encoding='utf8') as file:
         dr = csv.DictReader(file, delimiter=',') # csv.DictReader по умолчанию использует первую строку под заголовки столбцов
         csv_headers = tuple(dr.fieldnames)
-        #to_db = [[value for value in str.values()] for str in dr]
         to_db = []
         for string in dr:
             to_db.append([])
@@ -42,17 +41,6 @@ def import_csv_to_db(from_file_path, to_db_name, to_table_name):
         else:
             import_values += ')'
 
-        start_pos += 1
-
-        print(import_values)
-
-
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-    print(import_headers)
-    print(csv_headers)
-    print(import_values)
-    print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
-
     cursor.executemany(f"INSERT INTO {to_table_name} {tuple(import_headers)} VALUES {import_values};", to_db)
     connect.commit()
     connect.close()
@@ -65,30 +53,8 @@ def import_all(csv_to_table_dict, from_files_path, to_db_name):
         import_csv_to_db(from_path, to_db_name, to_table_name)
 
 
-def export_db_to_csv(to_file_path, from_db_name, from_table_name):
-    connect = sqlite3.connect(from_db_name)
-    connect.text_factory = str
-    cursor = connect.cursor()
-
-    data = cursor.execute(f'SELECT * FROM {from_table_name}')
-    with open(to_file_path, 'w', encoding='utf8', newline='') as file:
-        writer = csv.writer(file)
-        model_headers = (str[0] for str in data.description)
-        writer.writerow(model_headers)
-        writer.writerows(data)
-
-
-def export_all(table_to_csv_dict, from_db_name, to_files_path):
-    for key in table_to_csv_dict:
-        to_path = to_files_path + table_to_csv_dict[key] + '.csv'
-        from_table_name = key
-        export_db_to_csv(to_path, from_db_name, from_table_name)
-
-
 table_dict = {
-    'app_recipes_ingredient': 'ingredients',
+    'app_recipes_unit': 'units',
 }
 
 import_all(table_dict, '../ingredients_csv/', 'db.sqlite3')
-#export_all(table_dict, 'db.sqlite3', './export_csv/')
-
