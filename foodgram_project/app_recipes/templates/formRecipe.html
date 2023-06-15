@@ -35,11 +35,12 @@
                 <div class="form__field-group">
                     <div class="tags">
                         
-                        {% for tag_id, tag_name in form.tag.field.choices %}
-
+                        {% for tag in form.fields.tags.choices.queryset %}
                         <div class="tags__item">
-                            <input type="checkbox" name="tag" value="{{ tag_id.instance.pk }}" id="id_{{ tag_id.instance.name }}" class="tags__checkbox tags__checkbox_style_{{ tag_id.instance.color }}">
-                            <label for="id_{{ tag_id.instance.name }}" class="tags__label">{{ tag_id.instance.name }}</label>
+                            <input type="checkbox" name="tags" id="id_tag_{{ tag.pk }}"
+                            class="tags__checkbox tags__checkbox_style_{{ tag.color }}" value="{{ tag.pk }}"
+                            {% if tag.pk in form.tags.value %}checked{% endif %}>
+                            <label for="id_tag_{{ tag.pk }}" class="tags__label">{{ tag.name }}</label>
                         </div>
                         {% endfor %}
 

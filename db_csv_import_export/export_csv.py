@@ -24,7 +24,8 @@ def export_all(table_to_csv_dict, from_db_name, to_files_path):
 table_dict = {
     'auth_user': 'users',
     'app_recipes_unit': 'units',
-    'app_recipes_ingredient': 'ingredient',
+    'app_recipes_ingredient': 'ingredients',
+    'app_recipes_tag': 'tags',
 }
 
 export_all(table_dict, 'db.sqlite3', '../db_csv_import_export/csv_export/')
