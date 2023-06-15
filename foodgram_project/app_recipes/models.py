@@ -10,7 +10,7 @@ class Unit(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = 'Единица измерения'
         verbose_name_plural = 'Единицы измерения'
@@ -25,7 +25,7 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return f'{self.name}, {self.unit}'
-    
+
     class Meta:
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
@@ -34,10 +34,11 @@ class Ingredient(models.Model):
 
 class Tag(models.Model):
     name = models.CharField('Название', max_length=50, unique=True)
-    
+    color = models.CharField('Цветовой код', max_length=50)
+
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
@@ -48,7 +49,7 @@ class Recipe(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='recipes',
                                verbose_name='Автор')
-    name = models.CharField('Название', max_length=50, unique=True)
+    name = models.CharField('Название', max_length=50)
     image = models.ImageField('Картинка', upload_to='recipes/',
                               blank=True, null=True)
     description = models.TextField('Описание')
