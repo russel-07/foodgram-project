@@ -61,9 +61,20 @@
                         <input type="number" id="cantidad" class="form__input" min="0">
                         <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
                     </div>
-                    <div class="form__field-group-ingredientes-container">
 
+                    <div class="form__field-group-ingredientes-container">
+                        {% for ingredient in recipe.recipe_ingredients.all %}
+                        
+                            <div class="form__field-item-ingredient" id="ing_{{ forloop.counter }}">
+                                <span> {{ ingredient.ingredient.name }} {{ ingredient.amount }} {{ ingredient.ingredient.unit }} </span>
+                                <span class="form__field-item-delete"></span>
+                                <input id="nameIngredient_{{ forloop.counter }}" name="nameIngredient_{{ forloop.counter }}" type="hidden" value="{{ ingredient.ingredient.name }}">
+                                <input id="valueIngredient_{{ forloop.counter }}" name="valueIngredient_{{ forloop.counter }}" type="hidden" value="{{ ingredient.amount }}">
+                                <input id="unitsIngredient_{{ forloop.counter }}" name="unitsIngredient_{{ forloop.counter }}" type="hidden" value="{{ ingredient.ingredient.unit }}">
+                            </div>
+                        {% endfor %}
                     </div>
+
                     <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
                     <span class="form__error">{{ form.ingredient.errors }}</span>
                 </div>
@@ -105,10 +116,10 @@
 
 {% include 'footer.html' %}
 
-<script src="./js/config/config.js"></script>
-<script src="./js/components/Header.js"></script>
-<script src="./js/utils/debouncing.js"></script>
-<script src="./js/api/Api.js"></script>
-<script src="formRecipe.js"></script>
+<script src="{% static 'js/config/config.js' %}"></script>
+<script src="{% static 'js/components/Header.js' %}"></script>
+<script src="{% static 'js/utils/debouncing.js' %}"></script>
+<script src="{% static 'js/api/Api.js' %}"></script>
+<script src="{% static 'formRecipe.js' %}"></script>
 </body>
 </html>
