@@ -12,8 +12,6 @@ def index(request):
 def create_recipe(request):
     form = RecipeForm(request.POST or None, files=request.FILES or None)
     if form.is_valid():
-        recipe = form.save(commit=False)
-        recipe.author = request.user
-        recipe.save()
+        form.save(author = request.user)
         return redirect('/')
     return render(request, 'formRecipe.html', {'form': form})
