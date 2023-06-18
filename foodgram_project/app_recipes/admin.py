@@ -5,7 +5,7 @@ from . import models
 
 @admin.register(models.Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'author', 'pub_date',)
+    list_display = ('id', 'name', 'author', 'pub_date',)
     search_fields = ('name',) 
     list_filter = ('author', 'pub_date')
     empty_value_display = '-пусто-'
