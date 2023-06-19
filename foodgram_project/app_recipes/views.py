@@ -14,8 +14,8 @@ def index(request):
 def recipe_create(request):
     form = RecipeForm(request.POST or None, files=request.FILES or None)
     if form.is_valid():
-        form.save(author = request.user)
-        return redirect('index')
+        recipe = form.save(author = request.user)
+        return redirect('recipe_view', recipe_id=recipe.id)
 
     checked_tags = None
     if form['tags'].value():
@@ -32,17 +32,22 @@ def recipe_create(request):
         'button': 'Создать рецепт',
         'form': form,
         'checked_tags': checked_tags,
-        'selected_ingredients': selected_ingredients
+        'selected_ingredients': selected_ingredients,
     }
 
     return render(request, 'recipe_form.html', context)
+
+
+def recipe_view(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    return render(request, 'recipe_view.html', {'recipe': recipe})
 
 
 @login_required
 def recipe_edit(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if request.user != recipe.author:
-        return redirect("/")
+        return redirect('index')
     form = RecipeForm(request.POST or None, files=request.FILES or None,
                       instance=recipe)
     if form.is_valid():
@@ -61,7 +66,10 @@ def recipe_edit(request, recipe_id):
     return render(request, "recipe_form.html", context)
 
 
-def recipe_view(request, recipe_id):
+@login_required
+def recipe_delete(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    return render(request, 'recipe_view.html', {'recipe': recipe})
-
+    if request.user != recipe.author:
+        return redirect('index')
+    recipe.delete()
+    return redirect('index')

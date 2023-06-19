@@ -7,10 +7,16 @@
 
 {% block content %}
 <div class="single-card" data-id="{{ recipe.id }}" data-author="{{ recipe.author.id }}">
-    {% load thumbnail %}
-    {% thumbnail recipe.image "480x480" as im %}
-    <img src="{{ im.url }}" alt="{{ recipe.name }}" class="single-card__image">
-    {% endthumbnail %}
+    {% if recipe.image %}
+        {% load thumbnail %}
+        {% thumbnail recipe.image "480x480" as im %}
+        <img src="{{ im.url }}" alt="{{ recipe.name }}" class="single-card__image">
+        {% endthumbnail %}
+    {% else %}
+        {% load static %}
+        <img src="{% static 'recipes/default.png' %}" alt="{{ recipe.name }}" class="single-card__image">
+    {% endif %}
+
     <div class="single-card__info">
         <div class="single-card__header-info">
             <h1 class="single-card__title">{{ recipe.name }}</h1>

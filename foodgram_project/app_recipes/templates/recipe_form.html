@@ -20,7 +20,7 @@
         <div class="form__group">
             <p class="form__label">Теги</p>
             <div class="form__field-group">
-                <div class="tags">                
+                <div class="tags">    
                     {% for tag in form.fields.tags.choices.queryset %}
                         <div class="tags__item">
                             <input type="checkbox" name="tags" id="id_{{ tag.name }}"
@@ -66,10 +66,9 @@
                         <input id="unitsIngredient_{{ forloop.counter }}" name="unitsIngredient_{{ forloop.counter }}" type="hidden" value="{{ ingredient.unit }}">
                     </div>
                     {% endfor %}
-
+                    <span class="form__error">{{ form.ingredients.errors }}</span>
+                    <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
                 </div>
-                <span class="form__error">{{ form.ingredients.errors }}</span>
-                <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
             </div>
         </div>
 
@@ -93,13 +92,16 @@
         <div class="form__group">
             <span class="form__label">Загрузить фото</span>
             <div class="form__field-group">
-                <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}">
+                <input  type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}" value="{{ form.image.value }}">
                 <span class="form__error">{{ form.image.errors }}</span>
             </div>
         </div>
 
         <div class="form__footer">
             <button class="button button_style_blue">{{ button }}</button>
+            {% if edit %}
+            <a style='margin-left: 2.5em' href='{% url "recipe_delete" recipe.id  %}' class='form__ingredient-link'>Удалить</a>
+            {% endif %}
         </div>
     </form>
 </div>
