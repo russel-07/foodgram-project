@@ -1,5 +1,7 @@
-from rest_framework import viewsets, mixins
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import mixins, viewsets, status
+from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from app_recipes.models import Recipe, Ingredient, Favorite
 from .serializers import IngredientSerializer, FavoriteSerializer
@@ -22,14 +24,21 @@ class IngredientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         return queryset
 
 
-class FavoriteViewSet(mixins.CreateModelMixin, mixins.DestroyModelMixin,
+class FavoriteViewSet(mixins.CreateModelMixin,
+                      mixins.DestroyModelMixin,
                       viewsets.GenericViewSet):
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
-    lookup_field = 'id'
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        recipe = Recipe.objects.get(id=self.request.data["id"])
         user = self.request.user
+        recipe = get_object_or_404(Recipe, id=self.request.data['id'])
         serializer.save(user=user, recipe=recipe)
-        return super().perform_create(serializer)
+
+    def destroy(self, request, *args, **kwargs):
+        user = self.request.user
+        recipe = kwargs['pk']
+        favorite = get_object_or_404(Favorite, user=user, recipe=recipe)
+        favorite.delete()
+        return Response(data={'success': True}, status=status.HTTP_200_OK)

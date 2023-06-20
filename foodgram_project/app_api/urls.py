@@ -5,8 +5,8 @@ from .views import IngredientViewSet, FavoriteViewSet
 
 
 router = DefaultRouter()
-router.register(r'ingredients', IngredientViewSet, basename='Ingredient')
-router.register(r'favorites', FavoriteViewSet, basename='Favorite')
+router.register('ingredients', IngredientViewSet, basename='Ingredient')
+router.register('favorites', FavoriteViewSet, basename='Favorite')
 
 
 urlpatterns = [

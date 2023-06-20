@@ -96,3 +96,17 @@ class Favorite(models.Model):
         verbose_name = 'Избранный рецепт'
         verbose_name_plural = 'Избранные рецепты'
         unique_together = ('user', 'recipe')
+
+
+class Follow(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name='follower',
+                             verbose_name='Пользователь')
+    following = models.ForeignKey(User, on_delete=models.CASCADE,
+                                  related_name='following',
+                                  verbose_name='Подписчик')
+
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+        unique_together = ('user', 'following')

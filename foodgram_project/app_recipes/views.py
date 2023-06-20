@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-import json
 
 from .forms import RecipeForm
-from .models import Recipe, RecipeIngredient, Tag
+from .models import Recipe, Favorite, Follow
 
 
 def index(request):
@@ -40,7 +39,21 @@ def recipe_create(request):
 
 def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    return render(request, 'recipe_view.html', {'recipe': recipe})
+    is_favorite = None
+    is_follow = None
+    if request.user.is_authenticated:
+        user = request.user
+        is_favorite = Favorite.objects.filter(
+            user=user,recipe=recipe).exists()
+        is_follow = Follow.objects.filter(
+            user=user, following=user).exists()
+
+    context = {
+        'recipe': recipe,
+        'is_favorite': is_favorite,
+        'is_follow': is_follow
+    }
+    return render(request, 'recipe_view.html', context)
 
 
 @login_required
