@@ -6,7 +6,34 @@ from .models import Recipe, Favorite, Follow
 
 
 def index(request):
-    return render(request, 'base.html')
+    recipes = Recipe.objects.all
+    favorite_list = get_favorite_list(request)
+    context = {
+        'recipes': recipes,
+        'favorite_list': favorite_list
+    }
+
+    return render(request, 'index.html', context)
+
+
+def recipe_view(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    favorite_list = get_favorite_list(request)
+    is_follow = None
+    if request.user.is_authenticated:
+        user = request.user
+        is_favorite = Favorite.objects.filter(
+            user=user,recipe=recipe).exists()
+        is_follow = Follow.objects.filter(
+            user=user, author=recipe.author).exists()
+
+    context = {
+        'recipe': recipe,
+        'favorite_list': favorite_list,
+        'is_follow': is_follow
+    }
+
+    return render(request, 'recipe_view.html', context)
 
 
 @login_required
@@ -35,25 +62,6 @@ def recipe_create(request):
     }
 
     return render(request, 'recipe_form.html', context)
-
-
-def recipe_view(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
-    is_favorite = None
-    is_follow = None
-    if request.user.is_authenticated:
-        user = request.user
-        is_favorite = Favorite.objects.filter(
-            user=user,recipe=recipe).exists()
-        is_follow = Follow.objects.filter(
-            user=user, following=user).exists()
-
-    context = {
-        'recipe': recipe,
-        'is_favorite': is_favorite,
-        'is_follow': is_follow
-    }
-    return render(request, 'recipe_view.html', context)
 
 
 @login_required
@@ -86,3 +94,13 @@ def recipe_delete(request, recipe_id):
         return redirect('index')
     recipe.delete()
     return redirect('index')
+
+
+def get_favorite_list(request):
+    favorite_list = []
+    if request.user.is_authenticated:
+        user = request.user
+        favorites = user.favorites.all()
+        favorite_list = Recipe.objects.filter(favorites__in=favorites)
+        
+    return favorite_list

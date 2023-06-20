@@ -44,4 +44,4 @@ class FavoriteAdmin(admin.ModelAdmin):
 
 @admin.register(models.Follow)
 class FollowAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'following')
+    list_display = ('id', 'author', 'user')

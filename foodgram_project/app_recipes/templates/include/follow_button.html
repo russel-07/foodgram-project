@@ -1,6 +1,8 @@
 {% if user.is_authenticated and user.id != recipe.author.id %}
     <li class="single-card__item">
         <button class="button button_style_light-blue button_size_subscribe"
-        name="subscribe" data-out>Подписаться на автора</button>
+        name="subscribe" {% if not is_follow %}data-out{% endif %}>
+        {% if not is_follow %}Подписаться на автора{% else %}Отписаться от автора{% endif %}
+        </button>
     </li>
 {% endif %}
