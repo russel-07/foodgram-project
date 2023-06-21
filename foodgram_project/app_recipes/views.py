@@ -8,9 +8,11 @@ from .models import Recipe, Favorite, Follow
 def index(request):
     recipes = Recipe.objects.all
     favorite_list = get_favorite_list(request)
+    shop_list = get_shop_list(request)
     context = {
         'recipes': recipes,
-        'favorite_list': favorite_list
+        'favorite_list': favorite_list,
+        'shop_list': shop_list
     }
 
     return render(request, 'index.html', context)
@@ -19,6 +21,7 @@ def index(request):
 def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     favorite_list = get_favorite_list(request)
+    shop_list = get_shop_list(request)
     is_follow = None
     if request.user.is_authenticated:
         user = request.user
@@ -30,6 +33,7 @@ def recipe_view(request, recipe_id):
     context = {
         'recipe': recipe,
         'favorite_list': favorite_list,
+        'shop_list': shop_list,
         'is_follow': is_follow
     }
 
@@ -96,6 +100,13 @@ def recipe_delete(request, recipe_id):
     return redirect('index')
 
 
+def shoplist_view(request, username):
+    shoplist = get_shop_list(request)
+    return render(request, "shoplist_view.html", {'shoplist': shoplist})
+
+
+
+
 def get_favorite_list(request):
     favorite_list = []
     if request.user.is_authenticated:
@@ -104,3 +115,13 @@ def get_favorite_list(request):
         favorite_list = Recipe.objects.filter(favorites__in=favorites)
         
     return favorite_list
+
+
+def get_shop_list(request):
+    shop_list = []
+    if request.user.is_authenticated:
+        user = request.user
+        list = user.shoplist.all()
+        shop_list = Recipe.objects.filter(shoplist__in=list)
+        
+    return shop_list

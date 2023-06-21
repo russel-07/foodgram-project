@@ -22,11 +22,12 @@ def export_all(table_to_csv_dict, from_db_name, to_files_path):
 
 
 table_dict = {
-    #'auth_user': 'users',
-    #'app_recipes_unit': 'units',
-    #'app_recipes_ingredient': 'ingredients',
-    #'app_recipes_tag': 'tags',
+    'auth_user': 'users',
+    'app_recipes_unit': 'units',
+    'app_recipes_ingredient': 'ingredients',
+    'app_recipes_tag': 'tags',
     'app_recipes_recipe': 'recipes',
+    'app_recipes_recipe_tags': 'recipe_tags',
     'app_recipes_recipeingredient': 'recipe_ingredients',
 }
 

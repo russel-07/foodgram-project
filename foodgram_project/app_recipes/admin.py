@@ -21,7 +21,8 @@ class RecipeIngredientAdmin(admin.ModelAdmin):
 @admin.register(models.Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'unit')
-    list_filter = ('name',)
+    search_fields = ('name',) 
+    list_filter = ('unit',)
     empty_value_display = '-пусто-'
 
 
@@ -45,3 +46,8 @@ class FavoriteAdmin(admin.ModelAdmin):
 @admin.register(models.Follow)
 class FollowAdmin(admin.ModelAdmin):
     list_display = ('id', 'author', 'user')
+
+
+@admin.register(models.Shoplist)
+class ShoplistAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'recipe')

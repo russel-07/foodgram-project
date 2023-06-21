@@ -49,6 +49,9 @@ table_dict = {
     'app_recipes_unit': 'units',
     'app_recipes_ingredient': 'ingredients',
     'app_recipes_tag': 'tags',
+    'app_recipes_recipe': 'recipes',
+    'app_recipes_recipe_tags': 'recipe_tags',
+    'app_recipes_recipeingredient': 'recipe_ingredients',
 }
 
 import_all(table_dict, '../db_csv_import_export/csv_import/', 'db.sqlite3')

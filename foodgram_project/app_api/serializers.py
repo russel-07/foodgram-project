@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from app_recipes.models import Ingredient, Favorite, Follow
+from app_recipes.models import Ingredient, Favorite, Follow, Shoplist
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -23,3 +23,10 @@ class FollowSerializer(serializers.ModelSerializer):
         fields = ['user', 'author']
         model = Follow
         read_only_fields = ['user', 'author']
+
+
+class ShoplistSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ['user', 'recipe']
+        model = Shoplist
+        read_only_fields = ['user', 'recipe']

@@ -1,13 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .views import IngredientViewSet, FavoriteViewSet, FollowViewSet
+from . import views
 
 
 router = DefaultRouter()
-router.register('ingredients', IngredientViewSet, basename='Ingredient')
-router.register('favorites', FavoriteViewSet, basename='Favorite')
-router.register('follows', FollowViewSet, basename='Follow')
+router.register('ingredients', views.IngredientViewSet, basename='Ingredient')
+router.register('favorites', views.FavoriteViewSet, basename='Favorite')
+router.register('follows', views.FollowViewSet, basename='Follow')
+router.register('shoplist', views.ShoplistViewSet, basename='Shoplist')
 
 
 urlpatterns = [

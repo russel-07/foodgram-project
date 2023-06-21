@@ -110,3 +110,17 @@ class Follow(models.Model):
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
         unique_together = ('user', 'author')
+
+
+class Shoplist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name='shoplist',
+                             verbose_name='Пользователь')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                               related_name='shoplist',
+                               verbose_name='Рецепт')
+
+    class Meta:
+        verbose_name = 'Список покупок'
+        verbose_name_plural = 'Список покупок'
+        unique_together = ('user', 'recipe')

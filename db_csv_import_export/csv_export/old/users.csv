@@ -1,0 +1,7 @@
+id,password,last_login,is_superuser,username,first_name,last_name,is_staff,is_active,date_joined,email
+1,pbkdf2_sha256$150000$iglOF8Rp4vfw$7o3DQgI5TjcbvkY0GbtyceW8+/YNis0D+UczoEez+rg=,2023-06-14 08:37:12.919738,1,admin,,,1,1,2023-06-14 08:36:45.817126,admin@foodgram.com
+2,pbkdf2_sha256$150000$T3Scx1u5fhP1$/cAkdlTgu/GWXNzYhCR5KSUzO4SMRNplF07XcVUkDCk=,,0,russel_07,Rus,Sel,0,1,2023-06-14 09:15:16.506558,russel_07@mail.ru
+3,pbkdf2_sha256$150000$2KKOs6E0PSev$38tptEkL2EIwkNDrRnhoVd8VrDU4uLUNscV6sbdhLsA=,,0,veronichka,Вероника,Чернова,0,1,2023-06-14 09:17:45.106348,veronika@chernova.com
+4,pbkdf2_sha256$150000$zyDaGITuF4UO$FqipQ6yTmd91t354m4LlIzJCylzlswWC9pJDTJ5dCag=,,0,lera,,,0,1,2023-06-14 09:18:39.396082,lera@lera.com
+5,pbkdf2_sha256$150000$IRb9SxHiKct7$FR+LQO3l9u+huUX6bHE3dA39PxEqybAjJab1lv+/VeQ=,,0,alex,Александр,Бородин,0,1,2023-06-14 09:19:31.860961,alex@borodin.com
+6,pbkdf2_sha256$150000$bjG1QrVBGebr$Kawacei02VVrtcJkE4N6gwmFXlH0gzQrF6tlU8Ep0l8=,,0,mashka,Маша,Ульянова,0,1,2023-06-14 09:20:28.193049,masha@ulyanova.com

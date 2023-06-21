@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from . import serializers
-from app_recipes.models import Recipe, Ingredient, Favorite, Follow
+from app_recipes.models import Recipe, Ingredient, Favorite, Follow, Shoplist
 
 
 User = get_user_model()
@@ -65,4 +65,28 @@ class FollowViewSet(mixins.CreateModelMixin,
         author = kwargs['pk']
         follow = get_object_or_404(Follow, user=user, author=author)
         follow.delete()
+        return Response(data={'success': True}, status=status.HTTP_200_OK)
+
+class ShoplistViewSet(mixins.ListModelMixin,
+                      mixins.CreateModelMixin,
+                      mixins.DestroyModelMixin,
+                      viewsets.GenericViewSet):
+    queryset = Shoplist.objects.all()
+    serializer_class = serializers.ShoplistSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Shoplist.objects.filter(user=user)
+        return queryset
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        recipe = get_object_or_404(Recipe, id=self.request.data['id'])
+        serializer.save(user=user, recipe=recipe)
+
+    def destroy(self, request, *args, **kwargs):
+        user = self.request.user
+        recipe = kwargs['pk']
+        shoplist = get_object_or_404(Shoplist, user=user, recipe=recipe)
+        shoplist.delete()
         return Response(data={'success': True}, status=status.HTTP_200_OK)
