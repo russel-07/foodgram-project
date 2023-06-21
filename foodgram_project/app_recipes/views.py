@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from .forms import RecipeForm
-from .models import Recipe, Favorite, Follow
+from .models import Recipe, Favorite, Follow, RecipeIngredient
 
 
 def index(request):
@@ -103,6 +103,16 @@ def recipe_delete(request, recipe_id):
 def shoplist_view(request, username):
     shoplist = get_shop_list(request)
     return render(request, "shoplist_view.html", {'shoplist': shoplist})
+
+
+def shoplist_save(request, username):
+    shoplist = get_shop_list(request)
+    recipe_ingredients = RecipeIngredient.objects.filter(recipe__in=shoplist)
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    for ingredient in recipe_ingredients:
+        print(f'{ingredient.ingredient.name} - {ingredient.amount} {ingredient.ingredient.unit}')
+    return redirect('shoplist_view', username)
+
 
 
 

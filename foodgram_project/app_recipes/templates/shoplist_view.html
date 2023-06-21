@@ -7,42 +7,40 @@
 
 {% block content %}
 {% csrf_token %}
-
 <div class="main__header">
     <h1 class="main__title">Список покупок</h1>
 </div>
 <div class="card-list card-list_column">
     <ul class="shopping-list">
-        <li class="shopping-list__item" data-id="111">
+        {% for recipe in shoplist %}
+        <li class="shopping-list__item" data-id="{{ recipe.id }}">
             <div class="recipe recipe_reverse">
-                <img src="./images/testCardImg.png" alt="какой-то текст" class="recipe__image recipe__image_big">
-                <h3 class="recipe__title">Французские тосты</h3>
-                <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+                <a href="{% url 'recipe_view' recipe.id %}" class="recipe__image recipe__image_big">
+                    {% if recipe.image %}
+                        {% load thumbnail %}
+                        {% thumbnail recipe.image "480x480" as im %}
+                        <img src="{{ im.url }}" alt="{{ recipe.name }}" class="recipe__image recipe__image_big">
+                        {% endthumbnail %}
+                    {% else %}
+                        {% load static %}
+                        <img src="{% static 'recipes/default.png' %}" alt="{{ recipe.name }}" class="recipe__image recipe__image_big">
+                    {% endif %}
+                </a>
+                <a class="recipe__title" href="{% url 'recipe_view' recipe.id %}" style="text-decoration:none" target="_blank">
+                    {{ recipe.name }}
+                </a>
+                <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cook_time }} мин.</p>
             </div>
             <a href="#" class="shopping-list__button link">Удалить</a>
         </li>
-        <li class="shopping-list__item" data-id="1112">
-            <div class="recipe recipe_reverse">
-                <img src="./images/testCardImg.png" alt="какой-то текст" class="recipe__image recipe__image_big">
-                <h3 class="recipe__title">Французские тосты</h3>
-                <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
-            </div>
-            <a href="#" class="shopping-list__button link">Удалить</a>
-        </li>
-        <li class="shopping-list__item" data-id="1113">
-            <div class="recipe recipe_reverse">
-                <img src="./images/testCardImg.png" alt="какой-то текст" class="recipe__image recipe__image_big">
-                <h3 class="recipe__title">Французские тосты</h3>
-                <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
-            </div>
-            <a href="#" class="shopping-list__button link">Удалить</a>
-        </li>
+        {% endfor %}
     </ul>
-    <a href="#"><button class="button button_style_blue">Скачать список</button></a>
-
-
+    {% if user.shoplist.count %}
+        <a href="{% url 'shoplist_save' user %}"><button class="button button_style_blue">Скачать список</button></a>
+    {% else %}
+        <p style="font-family:'Montserrat'">Ваш список покупок пуст</p>
+    {% endif %}
 </div>
-
 {% endblock %}
 
 {% block javascript %}
