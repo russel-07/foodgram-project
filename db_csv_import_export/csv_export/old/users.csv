@@ -1,7 +1,7 @@
-id,password,last_login,is_superuser,username,first_name,last_name,is_staff,is_active,date_joined,email
-1,pbkdf2_sha256$150000$iglOF8Rp4vfw$7o3DQgI5TjcbvkY0GbtyceW8+/YNis0D+UczoEez+rg=,2023-06-14 08:37:12.919738,1,admin,,,1,1,2023-06-14 08:36:45.817126,admin@foodgram.com
-2,pbkdf2_sha256$150000$T3Scx1u5fhP1$/cAkdlTgu/GWXNzYhCR5KSUzO4SMRNplF07XcVUkDCk=,,0,russel_07,Rus,Sel,0,1,2023-06-14 09:15:16.506558,russel_07@mail.ru
-3,pbkdf2_sha256$150000$2KKOs6E0PSev$38tptEkL2EIwkNDrRnhoVd8VrDU4uLUNscV6sbdhLsA=,,0,veronichka,Вероника,Чернова,0,1,2023-06-14 09:17:45.106348,veronika@chernova.com
-4,pbkdf2_sha256$150000$zyDaGITuF4UO$FqipQ6yTmd91t354m4LlIzJCylzlswWC9pJDTJ5dCag=,,0,lera,,,0,1,2023-06-14 09:18:39.396082,lera@lera.com
-5,pbkdf2_sha256$150000$IRb9SxHiKct7$FR+LQO3l9u+huUX6bHE3dA39PxEqybAjJab1lv+/VeQ=,,0,alex,Александр,Бородин,0,1,2023-06-14 09:19:31.860961,alex@borodin.com
-6,pbkdf2_sha256$150000$bjG1QrVBGebr$Kawacei02VVrtcJkE4N6gwmFXlH0gzQrF6tlU8Ep0l8=,,0,mashka,Маша,Ульянова,0,1,2023-06-14 09:20:28.193049,masha@ulyanova.com
+id,password,last_login,is_superuser,username,last_name,email,is_staff,is_active,date_joined,first_name
+1,pbkdf2_sha256$600000$BgWjPPcVEHHL9r4XxLsYod$qJjQdAa59cEDqSQw1ZahzDiAByTNYE7X3b8MiRjdy00=,2023-06-21 10:36:11.059377,1,admin,,admin@foodgram.com,1,1,2023-06-14 08:36:45.817126,
+2,pbkdf2_sha256$600000$szfpSGs2JzLxaPhc5DxlZn$4E46tdwD9a/4I775E7S4bq0tUMEtxbxzMIkmsvf3IkU=,2023-06-21 10:34:56.632627,0,russel_07,Sel,russel_07@mail.ru,0,1,2023-06-14 09:15:16.506558,Rus
+3,pbkdf2_sha256$600000$pzCQhH5dswbA6dq2rRldUz$RMyaIBhGMIYNXnQHQ6JmPt/P8xRwpR80OsK29ZXdYDM=,2023-06-21 09:02:55.081072,0,veronichka,Чернова,veronika@chernova.com,0,1,2023-06-14 09:17:45.106348,Вероника
+4,pbkdf2_sha256$600000$SHzddXwTgLYkn7tNjVZvlP$Q6JX6M3daGWyY0pmenh/TtKEuwaIE9hpXSfoIiSUrv8=,2023-06-21 09:35:07.350324,0,lera,,lera@lera.com,0,1,2023-06-14 09:18:39.396082,
+5,pbkdf2_sha256$600000$sdv5oZOvEPwb5Z5TytYbkp$KIcx6SLPrzwZH2GCCkVyE3Rvh5SUzu+uvjmXrMKfqqo=,2023-06-21 09:40:42.947533,0,alex,Бородин,alex@borodin.com,0,1,2023-06-14 09:19:31.860961,Александр
+6,pbkdf2_sha256$600000$A4faTZ0ei9gQOGI4kwTgDE$aC/RbdILGITtooaNiBsrOROMMF3sCGBavFmkdusSCfg=,2023-06-21 09:45:06.297855,0,mashka,Ульянова,masha@ulyanova.com,0,1,2023-06-14 09:20:28.193049,Маша

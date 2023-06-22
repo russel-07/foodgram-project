@@ -1,8 +1,10 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 
 from .forms import RecipeForm
-from .models import Recipe, Favorite, Follow, RecipeIngredient
+from .models import Recipe, Favorite, Follow, Ingredient, RecipeIngredient
 
 
 def index(request):
@@ -107,12 +109,28 @@ def shoplist_view(request, username):
 
 def shoplist_save(request, username):
     shoplist = get_shop_list(request)
-    recipe_ingredients = RecipeIngredient.objects.filter(recipe__in=shoplist)
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-    for ingredient in recipe_ingredients:
-        print(f'{ingredient.ingredient.name} - {ingredient.amount} {ingredient.ingredient.unit}')
-    return redirect('shoplist_view', username)
+    shoplist_ingr = (
+        RecipeIngredient.objects.values('ingredient__name',
+                                        'ingredient__unit__name').
+                                        filter(recipe__in=shoplist).
+                                        annotate(total_amount=Sum('amount')).
+                                        order_by('ingredient')
+                                        )
 
+    output_text = ('Данный список автоматически сгенерирован'
+                   ' сервисом Foodgram.\n\nСписок покупок:\n')
+    for i, ingredient in enumerate(shoplist_ingr, 1):
+        output_text += (f'{i}. {ingredient["ingredient__name"]} - '
+                        f'{ingredient["total_amount"]} '
+                        f'{ingredient["ingredient__unit__name"]}\n')
+
+    if shoplist:
+        response = HttpResponse(content_type='text/plain')  
+        response['Content-Disposition'] = 'attachment; filename="shoplist.txt"'
+        response.write(output_text)
+        return response
+    else:
+        return redirect('shoplist_view', username)
 
 
 
