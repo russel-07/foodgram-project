@@ -24,14 +24,7 @@ def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     favorite_list = get_favorite_list(request)
     shop_list = get_shop_list(request)
-    is_follow = None
-    if request.user.is_authenticated:
-        user = request.user
-        is_favorite = Favorite.objects.filter(
-            user=user,recipe=recipe).exists()
-        is_follow = Follow.objects.filter(
-            user=user, author=recipe.author).exists()
-
+    is_follow = get_is_follow(request, recipe.author)
     context = {
         'recipe': recipe,
         'favorite_list': favorite_list,
@@ -48,20 +41,9 @@ def recipe_create(request):
     if form.is_valid():
         recipe = form.save(author = request.user)
         return redirect('recipe_view', recipe_id=recipe.id)
-
-    checked_tags = None
-    if form['tags'].value():
-        checked_tags = [int(val) for val in form['tags'].value()]
-
-    selected_ingredients = None
-    for key in form.data.keys():
-        if key[:14] == 'nameIngredient':
-            selected_ingredients = form.cleaned_data['ingredients']
-            break
-
+    checked_tags = get_checked_tags(form)
+    selected_ingredients = get_selected_ingredients(form)
     context = {
-        'page_title': 'Создание рецепта',
-        'button': 'Создать рецепт',
         'form': form,
         'checked_tags': checked_tags,
         'selected_ingredients': selected_ingredients,
@@ -83,14 +65,12 @@ def recipe_edit(request, recipe_id):
         return redirect('recipe_view', recipe_id=recipe.id)
     form = RecipeForm(instance=recipe)
     context = {
-        "page_title": "Редактирование рецепта",
-        "button": "Сохранить",
-        "form": form,
-        "recipe": recipe,
-        "edit": True,
+        'form': form,
+        'recipe': recipe,
+        'edit': True,
     }
 
-    return render(request, "recipe_form.html", context)
+    return render(request, 'recipe_form.html', context)
 
 
 @login_required
@@ -102,12 +82,23 @@ def recipe_delete(request, recipe_id):
     return redirect('index')
 
 
-def shoplist_view(request, username):
+def favorites_view(request):
+    favorite_list = get_favorite_list(request)
+    shop_list = get_shop_list(request)
+    context = {
+        'favorite_list': favorite_list,
+        'shop_list': shop_list
+    }
+
+    return render(request, 'favorites_view.html', context)
+
+
+def shoplist_view(request):
     shoplist = get_shop_list(request)
-    return render(request, "shoplist_view.html", {'shoplist': shoplist})
+    return render(request, 'shoplist_view.html', {'shoplist': shoplist})
 
 
-def shoplist_save(request, username):
+def shoplist_save(request):
     shoplist = get_shop_list(request)
     shoplist_ingr = (
         RecipeIngredient.objects.values('ingredient__name',
@@ -130,7 +121,8 @@ def shoplist_save(request, username):
         response.write(output_text)
         return response
     else:
-        return redirect('shoplist_view', username)
+        return redirect('shoplist_view')
+
 
 
 
@@ -153,3 +145,29 @@ def get_shop_list(request):
         shop_list = Recipe.objects.filter(shoplist__in=list)
         
     return shop_list
+
+
+def get_is_follow(request, author):
+    is_follow = None
+    if request.user.is_authenticated:
+        user = request.user
+        is_follow = Follow.objects.filter(user=user, author=author).exists()
+    return is_follow
+
+
+def get_checked_tags(form):
+    checked_tags = None
+    if form['tags'].value():
+        checked_tags = [int(val) for val in form['tags'].value()]
+
+    return checked_tags
+
+
+def get_selected_ingredients(form):
+    selected_ingredients = None
+    for key in form.data.keys():
+        if key[:14] == 'nameIngredient':
+            selected_ingredients = form.cleaned_data['ingredients']
+            break
+
+    return selected_ingredients

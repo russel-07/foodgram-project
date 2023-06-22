@@ -36,7 +36,7 @@
         {% endfor %}
     </ul>
     {% if user.shoplist.count %}
-        <a href="{% url 'shoplist_save' user %}"><button class="button button_style_blue">Скачать список</button></a>
+        <a href="{% url 'shoplist_save' %}"><button class="button button_style_blue">Скачать список</button></a>
     {% else %}
         <p style="font-family:'Montserrat'">Ваш список покупок пуст</p>
     {% endif %}

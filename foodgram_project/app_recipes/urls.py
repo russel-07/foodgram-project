@@ -12,8 +12,11 @@ urlpatterns = [
          name='recipe_edit'),
     path('recipe/<int:recipe_id>/delete/', views.recipe_delete,
          name='recipe_delete'),
-    path('recipe/<str:username>/shoplist/', views.shoplist_view,
+    path('favorites/', views.favorites_view,
+         name='favorites_view'),
+    path('shoplist/', views.shoplist_view,
          name='shoplist_view'),
-    path('recipe/<str:username>/shoplist/save/', views.shoplist_save,
+    path('shoplist/save/', views.shoplist_save,
          name='shoplist_save'),
+
 ]

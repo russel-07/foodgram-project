@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %}{{ page_title }}{% endblock %}
+{% block title %}
+    {% if edit %}Редактирование рецепта{% else %}Создание рецепта{% endif %}
+{% endblock %}
 {% block content %}
 {% load recipe_filters %}
 <div class="main__header">
@@ -98,7 +100,9 @@
         </div>
 
         <div class="form__footer">
-            <button class="button button_style_blue">{{ button }}</button>
+            <button class="button button_style_blue">
+                {% if edit %}Сохранить{% else %}Создать рецепт{% endif %}
+            </button>
             {% if edit %}
             <a style='margin-left: 2.5em' href='{% url "recipe_delete" recipe.id  %}' class='form__ingredient-link'>Удалить</a>
             {% endif %}
