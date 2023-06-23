@@ -14,6 +14,8 @@ urlpatterns = [
          name='recipe_delete'),
     path('favorites/', views.favorites_view,
          name='favorites_view'),
+    path('follows/', views.follows_view,
+         name='follows_view'),
     path('shoplist/', views.shoplist_view,
          name='shoplist_view'),
     path('shoplist/save/', views.shoplist_save,

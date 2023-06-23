@@ -1,0 +1,9 @@
+{% if recipe.image %}
+    {% load thumbnail %}
+    {% thumbnail recipe.image size as im %}
+    <img src="{{ im.url }}" alt="{{ alt }}" class="{{ class }}">
+    {% endthumbnail %}
+{% else %}
+    {% load static %}
+    <img src="{% static 'recipes/default.png' %}" alt="{{ alt }}" class="{{ class }}">
+{% endif %}

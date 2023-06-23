@@ -79,7 +79,17 @@ def recipe_delete(request, recipe_id):
     if request.user != recipe.author:
         return redirect('index')
     recipe.delete()
+
     return redirect('index')
+
+
+def follows_view(request):
+    follow_list = get_follow_list(request)
+    context = {
+        'follow_list': follow_list,
+    }
+
+    return render(request, 'follows_view.html', context)
 
 
 def favorites_view(request):
@@ -133,7 +143,7 @@ def get_favorite_list(request):
         user = request.user
         favorites = user.favorites.all()
         favorite_list = Recipe.objects.filter(favorites__in=favorites)
-        
+
     return favorite_list
 
 
@@ -143,8 +153,22 @@ def get_shop_list(request):
         user = request.user
         list = user.shoplist.all()
         shop_list = Recipe.objects.filter(shoplist__in=list)
-        
+
     return shop_list
+
+
+def get_follow_list(request):
+    follow_list = []
+    if request.user.is_authenticated:
+        user = request.user
+        follow_list = user.follower.all()
+        #following = user.following.all()
+        #print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+        #print(following)
+        #follow_list = Recipe.objects.filter(following__in=following)
+        #print(follow_list)
+
+    return follow_list
 
 
 def get_is_follow(request, author):
@@ -152,6 +176,7 @@ def get_is_follow(request, author):
     if request.user.is_authenticated:
         user = request.user
         is_follow = Follow.objects.filter(user=user, author=author).exists()
+
     return is_follow
 
 

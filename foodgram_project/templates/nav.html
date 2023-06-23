@@ -3,8 +3,8 @@
         <div class="nav__container container">
             <ul class="nav__items list">
                 {% if user.is_authenticated %}
-                    {% include "include/nav_point.html" with path="/" url="index" var=0 point_name="Рецепты" %}
-                    <li class="nav__item "><a href="#" class="nav__link link">Мои подписки</a></li>
+                    {% include "include/nav_point.html" with path="/" url="index" point_name="Рецепты" %}
+                    {% include "include/nav_point.html" with path="/follows/" url="follows_view" point_name="Мои подписки" %}
                     {% include "include/nav_point.html" with path="/recipe/create/" url="recipe_create" point_name="Создать рецепт" %}
                     {% include "include/nav_point.html" with path="/favorites/" url="favorites_view" point_name="Избранное" %}
                     {% include "include/nav_point.html" with path="/shoplist/" url="shoplist_view" point_name="Список покупок" %}

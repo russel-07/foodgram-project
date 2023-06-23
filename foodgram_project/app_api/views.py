@@ -58,7 +58,8 @@ class FollowViewSet(mixins.CreateModelMixin,
     def perform_create(self, serializer):
         user = self.request.user
         author = get_object_or_404(User, id=self.request.data['id'])
-        serializer.save(user=user, author=author)
+        if author != user:
+            serializer.save(user=user, author=author)
 
     def destroy(self, request, *args, **kwargs):
         user = self.request.user
