@@ -13,7 +13,9 @@
             {% for recipe in follow.author.recipes.all|slice:':3' %}
                 <li class="card-user__item">
                     <div class="recipe">
-                        {% include "include/image_card.html" with size="480x480" alt="recipe.name" class="recipe__image" %}
+                        <a href="{% url 'recipe_view' recipe.id %}" class="recipe__image">
+                            {% include "include/image_card.html" with size="480x480" class="recipe__image" %}
+                        </a>
                         <h3 class="recipe__title">{{ recipe.name }}</h3>
                         <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cook_time }} мин.</p>
                     </div>
@@ -21,19 +23,18 @@
             {% endfor %}
             {% if follow.author.recipes.all.count > 3 %}
                 <li class="card-user__item">
-                    <a href="#" class="card-user__link link">Еще {{ follow.author.recipes.all.count|add:-3 }} рецептов...</a>
+                    <a href="{% url 'profile_view' follow.author %}" class="card-user__link link">
+                        Еще {{ follow.author.recipes.all.count|add:-3 }}
+                        {% if follow.author.recipes.all.count|add:-3 == 1 %} рецепт
+                        {% elif follow.author.recipes.all.count|add:-3 > 1 and follow.author.recipes.all.count|add:-3 < 5 %} рецепта
+                        {% else %} рецептов
+                        {% endif %}...
+                    </a>
                 </li>
             {% endif %}
         </ul>
     </div>
     <div class="card-user__footer">
-
-        {% if user.is_authenticated and user.id != recipe.author.id %}
-            <button class="button button_style_light-blue button_size_auto"
-            name="subscribe" {% if follow not in follow_list %}data-out{% endif %}>
-            Отписаться
-            </button>
-        {% endif %}
-
+        {% include 'include/follow_button.html' with class="button_size_auto" %}
     </div>
 </div>

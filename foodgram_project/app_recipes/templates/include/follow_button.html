@@ -1,6 +1,16 @@
 {% if user.is_authenticated and user.id != recipe.author.id %}
-    <button class="button button_style_light-blue button_size_subscribe"
+    <button class="button button_style_light-blue {{ class }}"
     name="subscribe" {% if follow not in follow_list %}data-out{% endif %}>
-    {% if follow not in follow_list %}Подписаться на автора{% else %}Отписаться от автора{% endif %}
+    {% if request.resolver_match.view_name == 'recipe_view' %}
+        {% if follow not in follow_list %}
+            Подписаться на автора
+        {% else %}
+            Отписаться от автора
+        {% endif %}
+    {% elif request.resolver_match.view_name == 'profile_view' %}
+        Подписаться на автора
+    {% else %}
+        Отписаться
+    {% endif %}
     </button>
 {% endif %}

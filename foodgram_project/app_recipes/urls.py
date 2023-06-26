@@ -20,5 +20,6 @@ urlpatterns = [
          name='shoplist_view'),
     path('shoplist/save/', views.shoplist_save,
          name='shoplist_save'),
-
+    path('<str:username>/', views.profile_view,
+         name='profile_view'),
 ]

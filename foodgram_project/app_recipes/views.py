@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -5,6 +6,9 @@ from django.db.models import Sum
 
 from .forms import RecipeForm
 from .models import Recipe, Favorite, Follow, Ingredient, RecipeIngredient
+
+
+User = get_user_model()
 
 
 def index(request):
@@ -135,6 +139,17 @@ def shoplist_save(request):
         return response
     else:
         return redirect('shoplist_view')
+
+
+def profile_view(request, username):
+    profile = get_object_or_404(User, username=username)
+    recipes = Recipe.objects.filter(author=profile)
+    context = {
+        'profile': profile,
+        'recipes': recipes,
+    }
+
+    return render(request, 'profile_view.html', context)
 
 
 

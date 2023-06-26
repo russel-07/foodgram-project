@@ -1,0 +1,15 @@
+{% extends "extends/recipes_base.html" %}
+{% block title %}
+    {% if recipe.author.get_full_name %}{{ recipe.author.get_full_name }}{% else %}{{ recipe.author }}{% endif %}
+{% endblock %}
+{% block main_title %}
+    {% if recipe.author.get_full_name %}{{ recipe.author.get_full_name }}{% else %}{{ recipe.author }}{% endif %}
+{% endblock %}
+
+{% block follow_button %}
+    <div class="author-subscribe" data-author="{{ profile.id }}">
+        <p style="padding: 0 0 2em 0;">
+            {% include 'include/follow_button.html' with class="button_size_subscribe" %}
+        </p>
+    </div>
+{% endblock %}

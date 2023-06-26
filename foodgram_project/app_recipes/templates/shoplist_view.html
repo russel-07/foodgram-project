@@ -13,26 +13,7 @@
 <div class="card-list card-list_column">
     <ul class="shopping-list">
         {% for recipe in shoplist %}
-        <li class="shopping-list__item" data-id="{{ recipe.id }}">
-            <div class="recipe recipe_reverse">
-                <a href="{% url 'recipe_view' recipe.id %}" class="recipe__image recipe__image_big">
-                    {% if recipe.image %}
-                        {% load thumbnail %}
-                        {% thumbnail recipe.image "480x480" as im %}
-                        <img src="{{ im.url }}" alt="{{ recipe.name }}" class="recipe__image recipe__image_big">
-                        {% endthumbnail %}
-                    {% else %}
-                        {% load static %}
-                        <img src="{% static 'recipes/default.png' %}" alt="{{ recipe.name }}" class="recipe__image recipe__image_big">
-                    {% endif %}
-                </a>
-                <a class="recipe__title" href="{% url 'recipe_view' recipe.id %}" style="text-decoration:none" target="_blank">
-                    {{ recipe.name }}
-                </a>
-                <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cook_time }} мин.</p>
-            </div>
-            <a href="#" class="shopping-list__button link">Удалить</a>
-        </li>
+            {% include "include/shoplist_card.html" %}
         {% endfor %}
     </ul>
     {% if user.shoplist.count %}
