@@ -24,12 +24,15 @@ def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     favorite_list = get_favorite_list(request)
     shop_list = get_shop_list(request)
-    is_follow = get_is_follow(request, recipe.author)
+    follow = Follow.objects.filter(user=request.user,
+                                   author=recipe.author).first()
+    follow_list = get_follow_list(request)
     context = {
         'recipe': recipe,
         'favorite_list': favorite_list,
         'shop_list': shop_list,
-        'is_follow': is_follow
+        'follow': follow,
+        'follow_list': follow_list
     }
 
     return render(request, 'recipe_view.html', context)

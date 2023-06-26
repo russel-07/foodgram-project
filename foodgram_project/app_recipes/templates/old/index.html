@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Foodgram{% endblock %}
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+{% endblock %}
+{% block content %}
+{% csrf_token %}
+<div class="main__header">
+    <h1 class="main__title">Рецепты</h1>
+    {% include 'include/tags_panel.html' %}
+</div>
+<div class="card-list">
+    {% for recipe in recipes %}
+        {% include 'include/recipe_card.html' %}
+    {% endfor %}
+</div>
+{% include 'include/pagination_panel.html' %}
+{% endblock %}
+
+{% block javascript %}
+    {% load static %}
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+    <script src="{% static 'js/components/Purchases.js' %}"></script>
+    <script src="{% static 'js/components/Favorites.js' %}"></script>
+    <script src="{% static 'js/config/config.js' %}"></script>
+    <script src="{% static 'js/components/CardList.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+    <script src="{% static 'js/api/Api.js' %}"></script>
+    <script src="{% static 'indexAuth.js' %}"></script>
+{% endblock %}

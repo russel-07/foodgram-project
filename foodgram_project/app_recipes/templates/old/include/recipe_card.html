@@ -34,6 +34,9 @@
             <span class="icon-{% if recipe in shop_list %}check{% else %}plus{% endif %} button__icon"></span>
             {% if recipe in shop_list %} Рецепт добавлен{% else %} Добавить в покупки{% endif %}
         </button>
-        {% include 'include/favorite_button.html' %}
+        {% if user.is_authenticated and user.id != recipe.author.id %}
+        <button class="button button_style_none" name="favorites" {% if recipe not in favorite_list %}data-out{% endif %}>
+        <span class="icon-favorite {% if recipe in favorite_list %}icon-favorite_active{% endif %}"></span></button>
+        {% endif %}
     </div>
 </div>

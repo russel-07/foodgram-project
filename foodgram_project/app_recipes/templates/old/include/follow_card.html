@@ -1,0 +1,39 @@
+<div class="card-user" data-author="{{ follow.author.id }}">
+    <div class="card-user__header">
+        <h2 class="card-user__title">
+            {% if follow.author.get_full_name %}
+                {{ follow.author.get_full_name }}
+            {% else %}
+                {{ follow.author }}
+            {% endif %}
+        </h2>
+    </div>
+    <div class="card-user__body">
+        <ul class="card-user__items">
+            {% for recipe in follow.author.recipes.all|slice:':3' %}
+                <li class="card-user__item">
+                    <div class="recipe">
+                        {% include "include/image_card.html" with size="480x480" alt="recipe.name" class="recipe__image" %}
+                        <h3 class="recipe__title">{{ recipe.name }}</h3>
+                        <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cook_time }} мин.</p>
+                    </div>
+                </li>
+            {% endfor %}
+            {% if follow.author.recipes.all.count > 3 %}
+                <li class="card-user__item">
+                    <a href="#" class="card-user__link link">Еще {{ follow.author.recipes.all.count|add:-3 }} рецептов...</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="card-user__footer">
+
+        {% if user.is_authenticated and user.id != recipe.author.id %}
+            <button class="button button_style_light-blue button_size_auto"
+            name="subscribe" {% if follow not in follow_list %}data-out{% endif %}>
+            Отписаться
+            </button>
+        {% endif %}
+
+    </div>
+</div>
