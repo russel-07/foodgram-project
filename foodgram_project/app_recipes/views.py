@@ -5,13 +5,35 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 
 from .forms import RecipeForm
-from .models import Recipe, Favorite, Follow, Ingredient, RecipeIngredient
+from .models import Recipe, Tag, Follow, RecipeIngredient
 
 
 User = get_user_model()
 
 
 def index(request):
+    get_tags = request.GET.getlist('get_tags', (1, 2, 3))
+    print('>>>>>>>>>>>>>>>>>>>>>>')
+    print(get_tags)
+
+    recipes = Recipe.objects.filter(tags__in=get_tags).distinct()
+
+    tags = Tag.objects.all
+    favorite_list = get_favorite_list(request)
+    shop_list = get_shop_list(request)
+    get_tags = [int(v) for v in get_tags]
+    context = {
+        'recipes': recipes,
+        'tags': tags,
+        'get_tags': get_tags,
+        'favorite_list': favorite_list,
+        'shop_list': shop_list
+    }
+
+    return render(request, 'index.html', context)
+
+
+def index2(request):
     recipes = Recipe.objects.all
     favorite_list = get_favorite_list(request)
     shop_list = get_shop_list(request)
@@ -125,14 +147,12 @@ def shoplist_save(request):
                                         annotate(total_amount=Sum('amount')).
                                         order_by('ingredient')
                                         )
-
     output_text = ('Данный список автоматически сгенерирован'
                    ' сервисом Foodgram.\n\nСписок покупок:\n')
     for i, ingredient in enumerate(shoplist_ingr, 1):
         output_text += (f'{i}. {ingredient["ingredient__name"]} - '
                         f'{ingredient["total_amount"]} '
                         f'{ingredient["ingredient__unit__name"]}\n')
-
     if shoplist:
         response = HttpResponse(content_type='text/plain')  
         response['Content-Disposition'] = 'attachment; filename="shoplist.txt"'
