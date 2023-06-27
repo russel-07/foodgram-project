@@ -1,4 +1,5 @@
-<li class="single-card__item"><button class="button button_style_{% if recipe in shop_list %}light-blue-outline{% else %}blue{% endif %}"
-    name="purchases" {% if recipe not in shop_list %}data-out{% endif %}>
-    <span class="icon-{% if recipe in shop_list %}check{% else %}plus{% endif %} button__icon"></span>{% if recipe in shop_list %} Рецепт добавлен{% else %} Добавить в покупки{% endif %}</button>
-</li>
+<button class="button button_style_{% if recipe in shop_list %}light-blue-outline{% else %}{{ deactive_button }}{% endif %}"
+name="purchases" {% if recipe not in shop_list %}data-out{% endif %}>
+<span class="icon-{% if recipe in shop_list %}check{% else %}plus{% endif %} button__icon"></span>
+{% if recipe in shop_list %}Рецепт добавлен{% else %}Добавить в покупки{% endif %}
+</button>

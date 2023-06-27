@@ -103,6 +103,7 @@ def favorites_view(request):
     favorite_list = get_favorite_list(request)
     shop_list = get_shop_list(request)
     context = {
+        'recipes': favorite_list,
         'favorite_list': favorite_list,
         'shop_list': shop_list
     }
@@ -144,9 +145,14 @@ def shoplist_save(request):
 def profile_view(request, username):
     profile = get_object_or_404(User, username=username)
     recipes = Recipe.objects.filter(author=profile)
+    follow = Follow.objects.filter(user=request.user,
+                                   author=profile).first()
+    follow_list = get_follow_list(request)
     context = {
         'profile': profile,
         'recipes': recipes,
+        'follow': follow,
+        'follow_list': follow_list
     }
 
     return render(request, 'profile_view.html', context)

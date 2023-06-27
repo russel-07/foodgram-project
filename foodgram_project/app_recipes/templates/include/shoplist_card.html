@@ -3,9 +3,7 @@
         <a href="{% url 'recipe_view' recipe.id %}" class="recipe__image recipe__image_big">
             {% include "include/image_card.html" with size="480x480" class="recipe__image recipe__image_big" %}
         </a>
-        <a class="recipe__title" href="{% url 'recipe_view' recipe.id %}" style="text-decoration:none" target="_blank">
-            {{ recipe.name }}
-        </a>
+        {% include "include/recipe_button.html" with class="recipe__title" %}
         <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cook_time }} мин.</p>
     </div>
     <a href="#" class="shopping-list__button link">Удалить</a>

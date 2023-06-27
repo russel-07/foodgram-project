@@ -23,14 +23,18 @@
         <div class="single-card__items single-card__items_column">
             <p class="single-card__text"><span class="icon-time"></span> {{ recipe.cook_time }} мин.</p>
             <ul class="single-card__items">
-                <li class="single-card__item"><p class="single-card__text"><span class="icon-user"></span> {% if recipe.author.get_full_name %}{{ recipe.author.get_full_name }}{% else %}{{ recipe.author }}{% endif %}</p></li>
+                <li class="single-card__item">
+                    {% include "include/profile_button.html" with class="single-card__text" username=recipe.author %}
+                </li>
                 {% if user.is_authenticated and user.id == recipe.author.id %}
                 <li class="single-card__item">  <a style="margin-left: 2.5em" href="{% url 'recipe_edit' recipe.id %}" class="single-card__text">Редактировать рецепт</a></li>
                 {% endif %}
             </ul>
         </div>
         <ul class="single-card__items">
-            {% include 'include/add_in_shoplist_button.html' %}
+            <li class="single-card__item">
+                {% include 'include/shoplist_button.html' with deactive_button="blue" %}
+            </li>
             <li class="single-card__item">
                 {% include 'include/follow_button.html' with class="button_size_subscribe" %}
             </li>

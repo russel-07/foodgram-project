@@ -1,11 +1,7 @@
 <div class="card-user" data-author="{{ follow.author.id }}">
     <div class="card-user__header">
         <h2 class="card-user__title">
-            {% if follow.author.get_full_name %}
-                {{ follow.author.get_full_name }}
-            {% else %}
-                {{ follow.author }}
-            {% endif %}
+            {% include "include/profile_button.html" with class="card-user__title" username=follow.author %}
         </h2>
     </div>
     <div class="card-user__body">
@@ -16,7 +12,7 @@
                         <a href="{% url 'recipe_view' recipe.id %}" class="recipe__image">
                             {% include "include/image_card.html" with size="480x480" class="recipe__image" %}
                         </a>
-                        <h3 class="recipe__title">{{ recipe.name }}</h3>
+                        {% include "include/recipe_button.html" with class="recipe__title" %}
                         <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cook_time }} мин.</p>
                     </div>
                 </li>

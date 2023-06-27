@@ -3,9 +3,7 @@
         {% include "include/image_card.html" with size="480x480" class="card__image" %}
     </a>
     <div class="card__body">
-        <a class="card__title link" href="{% url 'recipe_view' recipe.id %}"
-            target="_blank">{{ recipe.name }}
-        </a>
+        {% include "include/recipe_button.html" with class="card__title link" %}
         <ul class="card__items">
             {% for tag in recipe.tags.all %}
                 <li class="card__item"><span class="badge badge_style_{{ tag.color }}">{{ tag.name }}</span></li>
@@ -13,19 +11,11 @@
         </ul>
         <div class="card__items card__items_column">
             <p class="card__text"><span class="icon-time"></span> {{ recipe.cook_time}} мин.</p>
-            <p class="card__text"><span class="icon-user"></span>
-                <a href="#" style="color: black; text-decoration: none">
-                    {% if recipe.author.get_full_name %}{{ recipe.author.get_full_name }}{% else %}{{ recipe.author }}{% endif %}
-                </a>
-            </p>
+            {% include "include/profile_button.html" with class="card__text" username=recipe.author%}
         </div>
     </div>
     <div class="card__footer">
-        <button class="button button_style_light-blue{% if recipe in shop_list %}-outline{% endif %}"
-            name="purchases" {% if recipe not in shop_list %}data-out{% endif %}>
-            <span class="icon-{% if recipe in shop_list %}check{% else %}plus{% endif %} button__icon"></span>
-            {% if recipe in shop_list %} Рецепт добавлен{% else %} Добавить в покупки{% endif %}
-        </button>
+        {% include 'include/shoplist_button.html' with deactive_button="light-blue" %}
         {% include 'include/favorite_button.html' %}
     </div>
 </div>
