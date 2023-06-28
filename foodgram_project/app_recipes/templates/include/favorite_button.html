@@ -1,11 +1,11 @@
 {% if user.is_authenticated and user.id != recipe.author.id %}
 <div class="single-card__favorite">
     <button class="button button_style_none" name="favorites"
-    {% if recipe not in favorite_list %}data-out{% endif %}>
-    <span class="icon-favorite icon-favorite_big {% if recipe in favorite_list %}icon-favorite_active{% endif %}"></span></button>
+    {% if recipe.id not in favorites %}data-out{% endif %}>
+    <span class="icon-favorite icon-favorite_big {% if recipe.id in favorites %}icon-favorite_active{% endif %}"></span></button>
     {% if request.resolver_match.view_name == 'recipe_view' %}
     <div class="single-card__favorite-tooltip tooltip">
-        {% if recipe not in favorite_list %}Добавить в избранное{% else %}Убрать из избранного{% endif %}
+        {% if recipe.id not in favorites %}Добавить в избранное{% else %}Убрать из избранного{% endif %}
     </div>
     {% endif %}
 </div>

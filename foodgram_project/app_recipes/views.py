@@ -6,40 +6,25 @@ from django.db.models import Sum
 
 from .forms import RecipeForm
 from .models import Recipe, Tag, Follow, RecipeIngredient
+from .utils import (get_follow_list, get_shop_list, get_selected_ingredients,
+                    get_favorite_list, get_checked_tags, get_pagination, get_check_tags)
 
 
 User = get_user_model()
 
 
 def index(request):
-    get_tags = request.GET.getlist('get_tags', (1, 2, 3))
-    print('>>>>>>>>>>>>>>>>>>>>>>')
-    print(get_tags)
-
-    recipes = Recipe.objects.filter(tags__in=get_tags).distinct()
-
-    tags = Tag.objects.all
-    favorite_list = get_favorite_list(request)
+    tags, get_tags = get_check_tags(request)
+    recipes = Recipe.objects.filter(tags__name__in=get_tags).distinct()
+    page, paginator = get_pagination(request, recipes, 3)
+    favorites = get_favorite_list(request)
     shop_list = get_shop_list(request)
-    get_tags = [int(v) for v in get_tags]
     context = {
-        'recipes': recipes,
+        'page': page,
+        'paginator': paginator,
         'tags': tags,
         'get_tags': get_tags,
-        'favorite_list': favorite_list,
-        'shop_list': shop_list
-    }
-
-    return render(request, 'index.html', context)
-
-
-def index2(request):
-    recipes = Recipe.objects.all
-    favorite_list = get_favorite_list(request)
-    shop_list = get_shop_list(request)
-    context = {
-        'recipes': recipes,
-        'favorite_list': favorite_list,
+        'favorites': favorites,
         'shop_list': shop_list
     }
 
@@ -48,14 +33,14 @@ def index2(request):
 
 def recipe_view(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    favorite_list = get_favorite_list(request)
+    favorites = get_favorite_list(request)
     shop_list = get_shop_list(request)
     follow = Follow.objects.filter(user=request.user,
                                    author=recipe.author).first()
     follow_list = get_follow_list(request)
     context = {
         'recipe': recipe,
-        'favorite_list': favorite_list,
+        'favorites': favorites,
         'shop_list': shop_list,
         'follow': follow,
         'follow_list': follow_list
@@ -70,8 +55,8 @@ def recipe_create(request):
     if form.is_valid():
         recipe = form.save(author = request.user)
         return redirect('recipe_view', recipe_id=recipe.id)
-    checked_tags = get_checked_tags(form)
-    selected_ingredients = get_selected_ingredients(form)
+    checked_tags = get_checked_tags(form)########################
+    selected_ingredients = get_selected_ingredients(form)################
     context = {
         'form': form,
         'checked_tags': checked_tags,
@@ -114,19 +99,27 @@ def recipe_delete(request, recipe_id):
 
 def follows_view(request):
     follow_list = get_follow_list(request)
+    page, paginator = get_pagination(request, follow_list, 3)
     context = {
-        'follow_list': follow_list,
+        'page': page,
+        'paginator': paginator,
     }
 
     return render(request, 'follows_view.html', context)
 
 
 def favorites_view(request):
-    favorite_list = get_favorite_list(request)
+    tags, get_tags = get_check_tags(request)
+    favorites = get_favorite_list(request)
+    recipes = Recipe.objects.filter(tags__name__in=get_tags, favorites__recipe__in=favorites).distinct()
+    page, paginator = get_pagination(request, recipes, 3)
     shop_list = get_shop_list(request)
     context = {
-        'recipes': favorite_list,
-        'favorite_list': favorite_list,
+        'page': page,
+        'paginator': paginator,
+        'tags': tags,
+        'get_tags': get_tags,
+        'favorites': favorites,
         'shop_list': shop_list
     }
 
@@ -164,79 +157,22 @@ def shoplist_save(request):
 
 def profile_view(request, username):
     profile = get_object_or_404(User, username=username)
-    recipes = Recipe.objects.filter(author=profile)
+    tags, get_tags = get_check_tags(request)
+    recipes = Recipe.objects.filter(author=profile, tags__name__in=get_tags).distinct()
+    page, paginator = get_pagination(request, recipes, 3)
     follow = Follow.objects.filter(user=request.user,
                                    author=profile).first()
     follow_list = get_follow_list(request)
+    favorites = get_favorite_list(request)
     context = {
+        'page': page,
+        'paginator': paginator,
+        'tags': tags,
+        'get_tags': get_tags,
         'profile': profile,
-        'recipes': recipes,
         'follow': follow,
-        'follow_list': follow_list
+        'follow_list': follow_list,
+        'favorites': favorites,
     }
 
     return render(request, 'profile_view.html', context)
-
-
-
-
-
-def get_favorite_list(request):
-    favorite_list = []
-    if request.user.is_authenticated:
-        user = request.user
-        favorites = user.favorites.all()
-        favorite_list = Recipe.objects.filter(favorites__in=favorites)
-
-    return favorite_list
-
-
-def get_shop_list(request):
-    shop_list = []
-    if request.user.is_authenticated:
-        user = request.user
-        list = user.shoplist.all()
-        shop_list = Recipe.objects.filter(shoplist__in=list)
-
-    return shop_list
-
-
-def get_follow_list(request):
-    follow_list = []
-    if request.user.is_authenticated:
-        user = request.user
-        follow_list = user.follower.all()
-        #following = user.following.all()
-        #print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        #print(following)
-        #follow_list = Recipe.objects.filter(following__in=following)
-        #print(follow_list)
-
-    return follow_list
-
-
-def get_is_follow(request, author):
-    is_follow = None
-    if request.user.is_authenticated:
-        user = request.user
-        is_follow = Follow.objects.filter(user=user, author=author).exists()
-
-    return is_follow
-
-
-def get_checked_tags(form):
-    checked_tags = None
-    if form['tags'].value():
-        checked_tags = [int(val) for val in form['tags'].value()]
-
-    return checked_tags
-
-
-def get_selected_ingredients(form):
-    selected_ingredients = None
-    for key in form.data.keys():
-        if key[:14] == 'nameIngredient':
-            selected_ingredients = form.cleaned_data['ingredients']
-            break
-
-    return selected_ingredients

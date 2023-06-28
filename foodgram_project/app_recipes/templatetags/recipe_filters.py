@@ -5,31 +5,22 @@ register = template.Library()
 
 @register.filter 
 def addclass(field, css):
-        return field.as_widget(attrs={"class": css})
+    return field.as_widget(attrs={"class": css})
 
 
-@register.filter(name='parse_tags')
-def parse_tags(get):
-    return get.getlist('get_tags')
-
-
-@register.filter(name='set_tag_qs')
-def set_tag_qs(request, tag):
+@register.filter
+def set_tag(request, tag):
     new_req = request.GET.copy()
-    print('########################')
-    print(new_req)
-    tags = new_req.getlist('get_tags')
-    print(tags)
-    print(tag.id)
-
-    if str(tag.id) in tags:
-        tags.remove(str(tag.id))
+    tags = new_req.getlist('tag')
+    if tag.name in tags:
+        tags.remove(tag.name)
     else:
-        tags.append(str(tag.id))
+        tags.append(tag.name)
+    new_req.setlist('tag', tags)
 
-    print(tags)
-    
-    new_req.setlist('get_tags', tags)
-    print(new_req)
-    print(new_req.urlencode())
     return new_req.urlencode()
+
+
+@register.filter
+def add_tags(tags):
+    return '&' + '&'.join([f'tag={tag}' for tag in tags])

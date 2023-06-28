@@ -12,7 +12,7 @@
 </div>
 {% block follow_button %}<!-- Button -->{% endblock %}
 <div class="card-list">
-    {% for recipe in recipes %}
+    {% for recipe in page %}
         {% include 'include/recipe_card.html' %}
     {% endfor %}
 </div>
