@@ -1,12 +1,12 @@
-<div class="card-user" data-author="{{ follow.author.id }}">
+<div class="card-user" data-author="{{ author.id }}">
     <div class="card-user__header">
         <h2 class="card-user__title">
-            {% include "include/profile_button.html" with class="card-user__title" username=follow.author %}
+            {% include "include/profile_button.html" with class="card-user__title" username=author %}
         </h2>
     </div>
     <div class="card-user__body">
         <ul class="card-user__items">
-            {% for recipe in follow.author.recipes.all|slice:':3' %}
+            {% for recipe in author.recipes.all|slice:':3' %}
                 <li class="card-user__item">
                     <div class="recipe">
                         <a href="{% url 'recipe_view' recipe.id %}" class="recipe__image">
@@ -17,12 +17,12 @@
                     </div>
                 </li>
             {% endfor %}
-            {% if follow.author.recipes.all.count > 3 %}
+            {% if author.recipes.all.count > 3 %}
                 <li class="card-user__item">
-                    <a href="{% url 'profile_view' follow.author %}" class="card-user__link link">
-                        Еще {{ follow.author.recipes.all.count|add:-3 }}
-                        {% if follow.author.recipes.all.count|add:-3 == 1 %} рецепт
-                        {% elif follow.author.recipes.all.count|add:-3 > 1 and follow.author.recipes.all.count|add:-3 < 5 %} рецепта
+                    <a href="{% url 'profile_view' author %}" class="card-user__link link">
+                        Еще {{ author.recipes.all.count|add:-3 }}
+                        {% if author.recipes.all.count|add:-3 == 1 %} рецепт
+                        {% elif author.recipes.all.count|add:-3 > 1 and author.recipes.all.count|add:-3 < 5 %} рецепта
                         {% else %} рецептов
                         {% endif %}...
                     </a>

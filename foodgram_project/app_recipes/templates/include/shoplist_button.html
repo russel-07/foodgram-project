@@ -1,5 +1,5 @@
-<button class="button button_style_{% if recipe in shop_list %}light-blue-outline{% else %}{{ deactive_button }}{% endif %}"
-name="purchases" {% if recipe not in shop_list %}data-out{% endif %}>
-<span class="icon-{% if recipe in shop_list %}check{% else %}plus{% endif %} button__icon"></span>
-{% if recipe in shop_list %}Рецепт добавлен{% else %}Добавить в покупки{% endif %}
+<button class="button button_style_{% if recipe.id in shop_list %}light-blue-outline{% else %}{{ deactive_button }}{% endif %}"
+name="purchases" {% if recipe.id not in shop_list %}data-out{% endif %}>
+<span class="icon-{% if recipe.id in shop_list %}check{% else %}plus{% endif %} button__icon"></span>
+{% if recipe.id in shop_list %}Рецепт добавлен{% else %}Добавить в покупки{% endif %}
 </button>

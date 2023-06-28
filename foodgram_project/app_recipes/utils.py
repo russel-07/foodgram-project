@@ -3,14 +3,12 @@ from django.core.paginator import Paginator
 from .models import Recipe, Tag
 
 
-def get_favorite_list(request):
-    favorite_list = []
+def get_favorites(request):
+    favorites = []
     if request.user.is_authenticated:
         user = request.user
         favorites = user.favorites.all().values_list('recipe', flat=True)
-        #favorite_list = Recipe.objects.filter(favorites__in=favorites)
 
-    #return favorite_list
     return favorites
 
 
@@ -18,19 +16,33 @@ def get_shop_list(request):
     shop_list = []
     if request.user.is_authenticated:
         user = request.user
-        list = user.shoplist.all()
-        shop_list = Recipe.objects.filter(shoplist__in=list)
+        shop_list = user.shoplist.all().values_list('recipe', flat=True)
 
     return shop_list
 
 
-def get_follow_list(request):
-    follow_list = []
+def get_follows(request):
+    follows = []
     if request.user.is_authenticated:
         user = request.user
-        follow_list = user.follower.all()
+        follows = user.follower.all().values_list('author', flat=True)
 
-    return follow_list
+    return follows
+
+
+def get_check_tags(request):
+    tags = Tag.objects.all()
+    get_tags = request.GET.getlist('tag', tags.values_list('name', flat=True))
+
+    return tags, get_tags
+
+
+def get_pagination(request, objects, obj_per_page):
+    paginator = Paginator(objects, obj_per_page)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+
+    return page, paginator
 
 
 def get_checked_tags(form):
@@ -49,18 +61,3 @@ def get_selected_ingredients(form):
             break
 
     return selected_ingredients
-
-
-def get_check_tags(request):
-    tags = Tag.objects.all()
-    get_tags = request.GET.getlist('tag', tags.values_list('name', flat=True))
-
-    return tags, get_tags
-
-
-def get_pagination(request, objects, obj_per_page):
-    paginator = Paginator(objects, obj_per_page)
-    page_number = request.GET.get('page')
-    page = paginator.get_page(page_number)
-
-    return page, paginator

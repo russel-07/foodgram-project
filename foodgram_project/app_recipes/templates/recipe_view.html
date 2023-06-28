@@ -36,7 +36,7 @@
                 {% include 'include/shoplist_button.html' with deactive_button="blue" %}
             </li>
             <li class="single-card__item">
-                {% include 'include/follow_button.html' with class="button_size_subscribe" %}
+                {% include 'include/follow_button.html' with class="button_size_subscribe" author=recipe.author.id %}
             </li>
         </ul>
         <div class="single-card__section">

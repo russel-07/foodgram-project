@@ -1,10 +1,10 @@
-{% if user.is_authenticated and user.id != recipe.author.id %}
+{% if user.is_authenticated and user.id != recipe.author.id and user.id != profile.id %}
     <button class="button button_style_light-blue {{ class }}"
-    name="subscribe" {% if follow not in follow_list %}data-out{% endif %}>
+    name="subscribe" {% if author not in follows %}data-out{% endif %}>
     {% if request.resolver_match.view_name == 'follows_view' %}
         Отписаться
     {% else %}
-        {% if follow not in follow_list %}
+        {% if author not in follows %}
             Подписаться на автора
         {% else %}
             Отписаться от автора

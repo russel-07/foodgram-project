@@ -7,6 +7,10 @@ register = template.Library()
 def addclass(field, css):
     return field.as_widget(attrs={"class": css})
 
+@register.filter
+def get_tags(get):
+    return get.getlist('tag')
+
 
 @register.filter
 def set_tag(request, tag):
