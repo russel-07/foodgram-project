@@ -38,6 +38,8 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -140,6 +142,8 @@ MEDIAFILES_DIRS = (os.path.join(BASE_DIR, "mediafiles"),)
 LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "index" 
 # LOGOUT_REDIRECT_URL = "index"
+
+SITE_ID = 1
 
 # Эмуляция почтового сервера
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"

@@ -11,19 +11,11 @@ from app_recipes.models import Recipe, Ingredient, Favorite, Follow, Shoplist
 User = get_user_model()
 
 
-class CreateRecipeIngredient(mixins.CreateModelMixin):
-    def perform_create(self, serializer):
-        recipe = Recipe.objects.get(id=self.request.data["id"])
-        user = self.request.user
-        serializer.save(user=user, recipes=recipe)
-        return super().perform_create(serializer)
-
-
 class IngredientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.IngredientSerializer
 
     def get_queryset(self):
-        query = self.request.query_params.get("query")
+        query = self.request.query_params.get("query").lower()
         queryset = Ingredient.objects.filter(name__startswith=query)
         return queryset
 
@@ -67,6 +59,7 @@ class FollowViewSet(mixins.CreateModelMixin,
         follow = get_object_or_404(Follow, user=user, author=author)
         follow.delete()
         return Response(data={'success': True}, status=status.HTTP_200_OK)
+
 
 class ShoplistViewSet(mixins.ListModelMixin,
                       mixins.CreateModelMixin,

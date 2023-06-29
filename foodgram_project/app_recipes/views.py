@@ -1,13 +1,12 @@
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
 
 from .forms import RecipeForm
-from .models import Recipe, RecipeIngredient
+from .models import Recipe
 from .utils import (get_follows, get_shop_list, get_selected_ingredients,
-                    get_favorites, get_pagination, get_checked_tags)
+                    get_favorites, get_pagination, get_checked_tags,
+                    get_shoplist_file)
 
 
 User = get_user_model()
@@ -134,25 +133,8 @@ def shoplist_view(request):
 
 def shoplist_save(request):
     shop_list = get_shop_list(request)
-    ingredients = (
-        RecipeIngredient.objects.values('ingredient__name',
-                                        'ingredient__unit__name').
-                                        filter(recipe__id__in=shop_list).
-                                        annotate(total_amount=Sum('amount')).
-                                        order_by('ingredient')
-                                        )
-    output_text = ('Данный список автоматически сгенерирован'
-                   ' сервисом Foodgram.\n\nСписок покупок:\n')
-    
-    for i, ingredient in enumerate(ingredients, 1):
-        output_text += (f'{i}. {ingredient["ingredient__name"]} - '
-                        f'{ingredient["total_amount"]} '
-                        f'{ingredient["ingredient__unit__name"]}\n')
     if shop_list:
-        response = HttpResponse(content_type='text/plain')  
-        response['Content-Disposition']= 'attachment; filename="shoplist.txt"'
-        response.write(output_text)
-        return response
+        return get_shoplist_file(shop_list)
     else:
         return redirect('shoplist_view')
 

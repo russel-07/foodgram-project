@@ -1,6 +1,8 @@
 from django.core.paginator import Paginator
+from django.http import HttpResponse
+from django.db.models import Sum
 
-from .models import Recipe, Tag
+from .models import RecipeIngredient, Tag
 
 
 def get_favorites(request):
@@ -53,3 +55,26 @@ def get_selected_ingredients(form):
             break
 
     return selected_ingredients
+
+
+def get_shoplist_file(shop_list):
+    ingredients = (
+        RecipeIngredient.objects.values('ingredient__name',
+                                        'ingredient__unit__name').
+                                        filter(recipe__id__in=shop_list).
+                                        annotate(total_amount=Sum('amount')).
+                                        order_by('ingredient')
+                                        )
+    output_text = ('Данный список автоматически сгенерирован'
+                   ' сервисом Foodgram.\n\nСписок покупок:\n')
+    
+    for i, ingredient in enumerate(ingredients, 1):
+        output_text += (f'{i}. {ingredient["ingredient__name"]} - '
+                        f'{ingredient["total_amount"]} '
+                        f'{ingredient["ingredient__unit__name"]}\n')
+
+    response = HttpResponse(content_type='text/plain')  
+    response['Content-Disposition']= 'attachment; filename="shoplist.txt"'
+    response.write(output_text)
+
+    return response

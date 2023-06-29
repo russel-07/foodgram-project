@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ flatpage.title }}{% endblock %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+    <div class="main__header" style="margin-top: -50px; margin-bottom: -20px;">
+        <h1 class="main__title">{{ flatpage.title }}</h1>
+    </div>
+    <div class="custom-center-block">
+        <p style="font-size:large;" class="custom-text-block">{{ flatpage.content }}</p>
+    </div>
+{% endblock %}
