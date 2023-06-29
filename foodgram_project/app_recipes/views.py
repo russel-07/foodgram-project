@@ -7,15 +7,14 @@ from django.db.models import Sum
 from .forms import RecipeForm
 from .models import Recipe, RecipeIngredient
 from .utils import (get_follows, get_shop_list, get_selected_ingredients,
-                    get_favorites, get_checked_tags, get_pagination,
-                    get_check_tags)
+                    get_favorites, get_pagination, get_checked_tags)
 
 
 User = get_user_model()
 
 
 def index(request):
-    tags, get_tags = get_check_tags(request)
+    tags, get_tags = get_checked_tags(request)
     recipes = Recipe.objects.filter(tags__name__in=get_tags).distinct()
     page, paginator = get_pagination(request, recipes, 3)
     favorites = get_favorites(request)
@@ -53,11 +52,9 @@ def recipe_create(request):
     if form.is_valid():
         recipe = form.save(author = request.user)
         return redirect('recipe_view', recipe_id=recipe.id)
-    checked_tags = get_checked_tags(form)########################
     selected_ingredients = get_selected_ingredients(form)################
     context = {
         'form': form,
-        'checked_tags': checked_tags,
         'selected_ingredients': selected_ingredients,
     }
 
@@ -110,7 +107,7 @@ def follows_view(request):
 
 @login_required
 def favorites_view(request):
-    tags, get_tags = get_check_tags(request)
+    tags, get_tags = get_checked_tags(request)
     favorites = get_favorites(request)
     recipes = Recipe.objects.filter(
         tags__name__in=get_tags, favorites__recipe__in=favorites).distinct()
@@ -162,7 +159,7 @@ def shoplist_save(request):
 
 def profile_view(request, username):
     profile = get_object_or_404(User, username=username)
-    tags, get_tags = get_check_tags(request)
+    tags, get_tags = get_checked_tags(request)
     recipes = Recipe.objects.filter(author=profile,
                                     tags__name__in=get_tags).distinct()
     page, paginator = get_pagination(request, recipes, 3)

@@ -13,6 +13,13 @@ def get_tags(get):
 
 
 @register.filter
+def check_tag(tag, tags):
+    if tags and tag in [int(v) for v in tags]:
+        return True
+    return False
+
+
+@register.filter
 def set_tag(request, tag):
     new_req = request.GET.copy()
     tags = new_req.getlist('tag')

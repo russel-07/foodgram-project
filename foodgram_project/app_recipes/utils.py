@@ -30,7 +30,7 @@ def get_follows(request):
     return follows
 
 
-def get_check_tags(request):
+def get_checked_tags(request):
     tags = Tag.objects.all()
     get_tags = request.GET.getlist('tag', tags.values_list('name', flat=True))
 
@@ -43,14 +43,6 @@ def get_pagination(request, objects, obj_per_page):
     page = paginator.get_page(page_number)
 
     return page, paginator
-
-
-def get_checked_tags(form):
-    checked_tags = None
-    if form['tags'].value():
-        checked_tags = [int(val) for val in form['tags'].value()]
-
-    return checked_tags
 
 
 def get_selected_ingredients(form):
