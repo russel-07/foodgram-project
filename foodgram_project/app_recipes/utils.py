@@ -39,8 +39,8 @@ def get_checked_tags(request):
     return tags, get_tags
 
 
-def get_pagination(request, objects, obj_per_page):
-    paginator = Paginator(objects, obj_per_page)
+def get_pagination(request, objects):
+    paginator = Paginator(objects, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
 

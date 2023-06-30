@@ -15,7 +15,7 @@ User = get_user_model()
 def index(request):
     tags, get_tags = get_checked_tags(request)
     recipes = Recipe.objects.filter(tags__name__in=get_tags).distinct()
-    page, paginator = get_pagination(request, recipes, 3)
+    page, paginator = get_pagination(request, recipes)
     favorites = get_favorites(request)
     shop_list = get_shop_list(request)
     context = {
@@ -95,7 +95,7 @@ def recipe_delete(request, recipe_id):
 def follows_view(request):
     follows = get_follows(request)
     authors = User.objects.filter(id__in=follows)
-    page, paginator = get_pagination(request, authors, 3)
+    page, paginator = get_pagination(request, authors)
     context = {
         'page': page,
         'paginator': paginator,
@@ -110,7 +110,7 @@ def favorites_view(request):
     favorites = get_favorites(request)
     recipes = Recipe.objects.filter(
         tags__name__in=get_tags, favorites__recipe__in=favorites).distinct()
-    page, paginator = get_pagination(request, recipes, 3)
+    page, paginator = get_pagination(request, recipes)
     shop_list = get_shop_list(request)
     context = {
         'page': page,
@@ -144,7 +144,7 @@ def profile_view(request, username):
     tags, get_tags = get_checked_tags(request)
     recipes = Recipe.objects.filter(author=profile,
                                     tags__name__in=get_tags).distinct()
-    page, paginator = get_pagination(request, recipes, 3)
+    page, paginator = get_pagination(request, recipes)
     follows = get_follows(request)
     favorites = get_favorites(request)
     context = {

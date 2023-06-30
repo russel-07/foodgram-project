@@ -52,6 +52,9 @@ table_dict = {
     'app_recipes_recipe': 'recipes',
     'app_recipes_recipe_tags': 'recipe_tags',
     'app_recipes_recipeingredient': 'recipe_ingredients',
+    'django_flatpage_sites': 'flatpage_sites',
+    'django_flatpage': 'flatpages',
 }
+
 
 import_all(table_dict, '../db_csv_import_export/csv_import/', 'db.sqlite3')

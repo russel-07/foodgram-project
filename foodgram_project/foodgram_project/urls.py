@@ -8,14 +8,10 @@ from django.contrib.flatpages import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('about/', include('django.contrib.flatpages.urls')),
     path('auth/', include('app_users.urls')),
     path('api/', include('app_api.urls')),
     path('', include('app_recipes.urls')),
-]
-
-urlpatterns += [
-    path('about-author/', views.flatpage, {'url': '/about/author/'}, name='about'),
+    path('about/', include('django.contrib.flatpages.urls')),
 ]
 
 

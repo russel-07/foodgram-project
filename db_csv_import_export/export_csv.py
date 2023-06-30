@@ -1,6 +1,14 @@
 import csv, sqlite3
 
 
+def get_name_tables(from_db_name):
+    connect = sqlite3.connect(from_db_name)
+    cursor = connect.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    for table in cursor.fetchall():
+        print(table)
+
+
 def export_db_to_csv(to_file_path, from_db_name, from_table_name):
     connect = sqlite3.connect(from_db_name)
     connect.text_factory = str
@@ -29,6 +37,10 @@ table_dict = {
     'app_recipes_recipe': 'recipes',
     'app_recipes_recipe_tags': 'recipe_tags',
     'app_recipes_recipeingredient': 'recipe_ingredients',
+    'django_flatpage_sites': 'flatpage_sites',
+    'django_flatpage': 'flatpages',
 }
 
+
+get_name_tables('db.sqlite3')
 export_all(table_dict, 'db.sqlite3', '../db_csv_import_export/csv_export/')

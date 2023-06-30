@@ -1,9 +1,9 @@
 {% if recipe.image %}
     {% load thumbnail %}
-    {% thumbnail recipe.image size as im %}
+    {% thumbnail recipe.image size crop='center' as im %}
     <img src="{{ im.url }}" alt="{{ recipe.name }}" class="{{ class }}">
     {% endthumbnail %}
 {% else %}
     {% load static %}
-    <img src="{% static 'recipes/default.png' %}" alt="{{ recipe.name }}" class="{{ class }}">
+    <img src="{% static 'recipes/default.jpg' %}" alt="{{ recipe.name }}" class="{{ class }}">
 {% endif %}

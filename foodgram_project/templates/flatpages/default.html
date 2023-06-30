@@ -3,10 +3,10 @@
 {% block content %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'pages/index.css' %}">
-    <div class="main__header" style="margin-top: -50px; margin-bottom: -20px;">
+    <div class="main__header" style="margin-top: -50px; margin-bottom: 10px;">
         <h1 class="main__title">{{ flatpage.title }}</h1>
     </div>
-    <div class="custom-center-block">
-        <p style="font-size:large;" class="custom-text-block">{{ flatpage.content }}</p>
+    <div class="custom-text-block" style="justify-content:left; align-items: flex-start">
+        <p style="font-size:large; line-height:30px; text-align:justify;">{{ flatpage.content }}</p>
     </div>
 {% endblock %}
