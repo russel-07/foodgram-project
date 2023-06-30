@@ -19,7 +19,7 @@
     {% if user.shoplist.count %}
         <a href="{% url 'shoplist_save' %}"><button class="button button_style_blue">Скачать список</button></a>
     {% else %}
-        <p style="font-family:'Montserrat'">Ваш список покупок пуст</p>
+        <p style="font-family:'Montserrat'; font-size:large; margin-top:-100px;">Ваш список покупок пуст</p>
     {% endif %}
 </div>
 {% endblock %}

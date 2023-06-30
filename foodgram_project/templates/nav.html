@@ -10,8 +10,8 @@
                     {% include "include/nav_point.html" with path="/shoplist/" url="shoplist_view" point_name="Список покупок" %}
                     <span style="margin-left: -20px;" class="badge badge_style_blue nav__badge" id="counter">{% if user.shoplist.count %}{{ user.shoplist.count }}{% endif %}</span>
                 {% else %}
-                    <li class="nav__item nav__item_disabled"><a href="#" class="nav__link link">Рецепты</a></li>
-                    <li class="nav__item nav__item_disabled"><a href="#" class="nav__link link">Список покупок</a></li>
+                    {% include "include/nav_point.html" with path="/" url="index" point_name="Рецепты" %}
+                    {% include "include/nav_point.html" with path="/shoplist/" url="shoplist_view" point_name="Список покупок" %}
                 {% endif %}
             </ul>
             <ul class="nav__items list">
