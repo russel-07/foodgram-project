@@ -22,4 +22,8 @@ urlpatterns = [
          name='shoplist_save'),
     path('<str:username>/', views.profile_view,
          name='profile_view'),
+
+
+    path('shoplist/add/<int:recipe_id>', views.add_recipe,
+         name='add_recipe'),
 ]

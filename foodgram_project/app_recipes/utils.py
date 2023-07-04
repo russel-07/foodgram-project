@@ -19,6 +19,8 @@ def get_shop_list(request):
     if request.user.is_authenticated:
         user = request.user
         shop_list = user.shoplist.all().values_list('recipe', flat=True)
+    elif 'recipes' in request.session:
+        shop_list = request.session['recipes']
 
     return shop_list
 
@@ -69,7 +71,8 @@ def get_shoplist_file(shop_list):
                    ' сервисом Foodgram.\n\nСписок покупок:\n')
     
     for i, ingredient in enumerate(ingredients, 1):
-        output_text += (f'{i}. {ingredient["ingredient__name"]} - '
+        output_text += (f'{i}. {ingredient["ingredient__name"][0].upper()}'
+                        f'{ingredient["ingredient__name"][1:]} - '
                         f'{ingredient["total_amount"]} '
                         f'{ingredient["ingredient__unit__name"]}\n')
 
