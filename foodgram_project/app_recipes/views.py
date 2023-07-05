@@ -159,21 +159,3 @@ def profile_view(request, username):
     }
 
     return render(request, 'profile_view.html', context)
-
-
-def add_recipe(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
-    if not request.user.is_authenticated:
-        if 'recipes' not in request.session:
-            request.session.set_expiry(30)
-            request.session['recipes'] = [recipe.id]
-        else:
-            x = request.session['recipes']
-            if recipe.id not in x:
-                x.append(recipe.id)
-                request.session['recipes'] = x
-        
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        print(request.session['recipes'])
-
-        return redirect(request.META.get('HTTP_REFERER'))

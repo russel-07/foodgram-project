@@ -74,13 +74,28 @@ class ShoplistViewSet(mixins.ListModelMixin,
         return queryset
 
     def perform_create(self, serializer):
-        user = self.request.user
         recipe = get_object_or_404(Recipe, id=self.request.data['id'])
-        serializer.save(user=user, recipe=recipe)
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            serializer.save(user=user, recipe=recipe)
+        elif 'recipes' not in self.request.session:
+            self.request.session.set_expiry(0)
+            self.request.session['recipes'] = [recipe.id]
+        else:
+            recipes = self.request.session['recipes']
+            if recipe.id not in recipes:
+                recipes.append(recipe.id)
+                self.request.session['recipes'] = recipes
 
     def destroy(self, request, *args, **kwargs):
-        user = self.request.user
         recipe = kwargs['pk']
-        shoplist = get_object_or_404(Shoplist, user=user, recipe=recipe)
-        shoplist.delete()
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            shoplist = get_object_or_404(Shoplist, user=user, recipe=recipe)
+            shoplist.delete()
+        else:
+            recipes = self.request.session['recipes']
+            recipes.remove(int(recipe))
+            self.request.session['recipes'] = recipes
+
         return Response(data={'success': True}, status=status.HTTP_200_OK)
