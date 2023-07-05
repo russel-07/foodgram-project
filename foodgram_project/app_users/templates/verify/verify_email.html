@@ -1,0 +1,5 @@
+{% autoescape off %}
+Здравствуйте, {% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user.username }}{% endif %}!
+Для завершения регистрации перейдите по ссылке:
+http://{{ domain }}{% url 'verify_email' uidb64=uid token=token %}
+{% endautoescape %}

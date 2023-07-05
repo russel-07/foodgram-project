@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'django_email_verification',
     'sorl.thumbnail',
     'app_users',
     'app_recipes',
