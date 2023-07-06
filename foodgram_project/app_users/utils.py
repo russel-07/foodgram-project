@@ -17,4 +17,3 @@ def send_email_for_verify(request, user):
     message = render_to_string('verify/verify_email.html', context=context)
     email = EmailMessage('Verify email', message, to=[user.email])
     email.send()
-

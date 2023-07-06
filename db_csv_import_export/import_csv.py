@@ -45,7 +45,7 @@ def import_all(csv_to_table_dict, from_files_path, to_db_name):
 
 
 table_dict = {
-    'auth_user': 'users',
+    'app_users_user': 'users',
     'app_recipes_unit': 'units',
     'app_recipes_ingredient': 'ingredients',
     'app_recipes_tag': 'tags',

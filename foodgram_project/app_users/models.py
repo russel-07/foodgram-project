@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 
-User = get_user_model()
-User._meta.get_field('email').blank = False
+
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    email_verify = models.BooleanField(default=False)

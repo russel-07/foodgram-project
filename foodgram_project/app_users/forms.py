@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model, authenticate
 from django.core.exceptions import ValidationError
 
+#from .models import User
 from .utils import send_email_for_verify
 
 
@@ -14,17 +15,15 @@ class AuthForm(AuthenticationForm):
         password = self.cleaned_data.get("password")
 
         if username is not None and password:
-            self.user_cache = authenticate(
-                self.request, username=username, password=password
-            )
-            if not self.user_cache.is_active:
-                send_email_for_verify(self.request, self.user_cache)
-                raise ValidationError(
-                    'Вам необходимо верифицировать email. Проверьте почту!',
-                    code='invalid_login'
-                    )
+            self.user_cache = authenticate(self.request, username=username,
+                                           password=password)
             if self.user_cache is None:
                 raise self.get_invalid_login_error()
+            elif not self.user_cache.email_verify:
+                send_email_for_verify(self.request, self.user_cache)
+                err = ('Необходима верификация email. Вам отправлено письмо'
+                       ' со ссылкой для подтверждения регистрации.')
+                raise ValidationError(err, code='password_incorrect')
             else:
                 self.confirm_login_allowed(self.user_cache)
 

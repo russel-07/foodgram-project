@@ -30,7 +30,7 @@ def export_all(table_to_csv_dict, from_db_name, to_files_path):
 
 
 table_dict = {
-    'auth_user': 'users',
+    'app_users_user': 'users',
     'app_recipes_unit': 'units',
     'app_recipes_ingredient': 'ingredients',
     'app_recipes_tag': 'tags',
