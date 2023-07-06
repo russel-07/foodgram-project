@@ -1,5 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Завершение регистрации{% endblock %}
 {% block content %}
-{% include "complete_page_base.html" with msg="Ссылка содержит ошибку или устарела."  url="/" button_name="Перейти на главную" %}
+{% include "complete_page_base.html" with msg="Ссылка содержит ошибку или устарела.<br>Попробуйте войти снова, а затем проверьте электронную почту."  url="/auth/login/" button_name="Войти" %}
 {% endblock %}
