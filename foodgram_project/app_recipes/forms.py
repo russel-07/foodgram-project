@@ -1,5 +1,5 @@
 from django import forms
-from .models import Recipe, Ingredient, Tag, RecipeIngredient
+from .models import Recipe, Ingredient, RecipeIngredient
 from decimal import Decimal
 
 
@@ -10,13 +10,13 @@ class RecipeForm(forms.ModelForm):
         fields = ['name', 'tags', 'ingredients', 'cook_time',
                   'description', 'image']
         widgets = {'tags': forms.CheckboxSelectMultiple()}
-    
+
     def clean_ingredients(self):
         ingredient_names = [self.data[key] for key in self.data
                             if key.startswith("nameIngredient_")]
         ingredient_units = [self.data[key] for key in self.data
                             if key.startswith("unitsIngredient_")]
-        ingredient_quantities = [Decimal(self.data[key].replace(',','.'))
+        ingredient_quantities = [Decimal(self.data[key].replace(',', '.'))
                                  for key in self.data
                                  if key.startswith("valueIngredient_")]
         ingredients_clean = []

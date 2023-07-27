@@ -6,7 +6,7 @@ from . import models
 @admin.register(models.Recipe)
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'author', 'pub_date',)
-    search_fields = ('name',) 
+    search_fields = ('name',)
     list_filter = ('author', 'pub_date')
     empty_value_display = '-пусто-'
 
@@ -21,7 +21,7 @@ class RecipeIngredientAdmin(admin.ModelAdmin):
 @admin.register(models.Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'unit')
-    search_fields = ('name',) 
+    search_fields = ('name',)
     list_filter = ('unit',)
     empty_value_display = '-пусто-'
 

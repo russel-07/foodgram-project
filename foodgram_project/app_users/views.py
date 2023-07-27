@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
@@ -22,7 +22,8 @@ class EmailVerify(View):
         if user is not None and check_token:
             user.email_verify = True
             user.save()
-            #login(request, user)
+            # from django.contrib.auth import login
+            # login(request, user)
             return redirect('complete_verify')
         return redirect('invalid_verify')
 
@@ -31,7 +32,8 @@ class EmailVerify(View):
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist, ValidationError):
+        except (TypeError, ValueError, OverflowError,
+                User.DoesNotExist, ValidationError):
             user = None
         return user
 
@@ -42,7 +44,7 @@ class Register(View):
     def get(self, request):
         form = CreationForm()
         return render(request, self.template_name, {'form': form})
-    
+
     def post(self, request):
         form = CreationForm(request.POST)
 
@@ -51,7 +53,8 @@ class Register(View):
             email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
-            user = authenticate(email=email, username=username, password=password)
+            user = authenticate(email=email, username=username,
+                                password=password)
             send_email_for_verify(request, user)
             return redirect('confirm_email')
 

@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 
 from .forms import RecipeForm
 from .models import Recipe
@@ -52,7 +51,7 @@ def recipe_create(request):
     if form.is_valid():
         recipe = form.save(author = request.user)
         return redirect('recipe_view', recipe_id=recipe.id)
-    selected_ingredients = get_selected_ingredients(form)################
+    selected_ingredients = get_selected_ingredients(form)
     context = {
         'form': form,
         'selected_ingredients': selected_ingredients,
