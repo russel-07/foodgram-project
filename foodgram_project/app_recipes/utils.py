@@ -62,10 +62,10 @@ def get_selected_ingredients(form):
 def get_shoplist_file(shop_list):
     ingredients = (
         RecipeIngredient.objects.values('ingredient__name',
-                                        'ingredient__unit__name').
-                                       filter(recipe__id__in=shop_list).
-                                       annotate(total_amount=Sum('amount')).
-                                       order_by('ingredient')
+                                        'ingredient__unit__name')
+                                        .filter(recipe__id__in=shop_list)
+                                        .annotate(total_amount=Sum('amount'))
+                                        .order_by('ingredient')
                                         )
     output_text = ('Данный список автоматически сгенерирован'
                    ' сервисом Foodgram.\n\nСписок покупок:\n')

@@ -33,7 +33,8 @@ def import_csv_to_db(from_file_path, to_db_name, to_table_name):
         else:
             import_values += ')'
 
-    cursor.executemany(f"INSERT INTO {to_table_name} {tuple(import_headers)} VALUES {import_values};", to_db)
+    cursor.executemany(f"INSERT INTO {to_table_name} {tuple(import_headers)} "
+                       f"VALUES {import_values};", to_db)
     connect.commit()
     connect.close()
 
