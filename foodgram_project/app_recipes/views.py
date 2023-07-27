@@ -49,7 +49,7 @@ def recipe_view(request, recipe_id):
 def recipe_create(request):
     form = RecipeForm(request.POST or None, files=request.FILES or None)
     if form.is_valid():
-        recipe = form.save(author = request.user)
+        recipe = form.save(author=request.user)
         return redirect('recipe_view', recipe_id=recipe.id)
     selected_ingredients = get_selected_ingredients(form)
     context = {

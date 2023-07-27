@@ -1,4 +1,5 @@
-import csv, sqlite3
+import sqlite3
+import csv
 
 
 def import_csv_to_db(from_file_path, to_db_name, to_table_name):
@@ -6,7 +7,7 @@ def import_csv_to_db(from_file_path, to_db_name, to_table_name):
     cursor = connect.cursor()
 
     with open(from_file_path, 'r', encoding='utf8') as file:
-        dr = csv.DictReader(file, delimiter=',') # csv.DictReader по умолчанию использует первую строку под заголовки столбцов
+        dr = csv.DictReader(file, delimiter=',')
         csv_headers = tuple(dr.fieldnames)
         to_db = [[value for value in str.values()] for str in dr]
 

@@ -1,4 +1,5 @@
-import csv, sqlite3
+import sqlite3
+import csv
 
 
 def get_name_tables(from_db_name):
