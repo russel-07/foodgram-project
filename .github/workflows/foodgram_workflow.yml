@@ -20,4 +20,4 @@ jobs:
         pip install -r requirements.txt
 
     - name: Lint with flake8
-      run: flake8 . --exclude foodgram_project/settings.py,api_yamdb/urls.py,app_api/migrations,app_recipes/migrations,app_users/migrations
+      run: flake8 . --exclude foodgram_project/foodgram_project/settings.py,foodgram_project/app_api/migrations,foodgram_project/app_recipes/migrations,foodgram_project/app_users/migrations
