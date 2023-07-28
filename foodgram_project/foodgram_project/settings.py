@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from datetime import timedelta
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,9 +29,14 @@ SECRET_KEY = 'aye8%wm_dvs0&)$ly!rff+(9ak@a_d44r@brozcjud$!(h-lhf'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*',
     'localhost',
     '127.0.0.1',
+    '158.160.74.170',
+    'web',
+    ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://158.160.74.170',
     ]
 
 
@@ -94,6 +101,19 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get('DB_ENGINE'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+    }
+}
+'''
 
 
 # Password validation

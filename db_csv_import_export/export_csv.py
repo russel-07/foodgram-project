@@ -44,4 +44,4 @@ table_dict = {
 
 
 get_name_tables('db.sqlite3')
-export_all(table_dict, 'db.sqlite3', '../db_csv_import_export/csv_export/')
+#export_all(table_dict, 'db.sqlite3', '../db_csv_import_export/csv_export/')

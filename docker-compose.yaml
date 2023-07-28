@@ -1,0 +1,36 @@
+version: '3.8'  
+
+volumes:        
+  postgres_data:
+  staticfiles:  
+
+services:       
+  db:
+    image: postgres:13.1
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  web:
+    image: russel07/yamdb:latest
+    container_name: web
+    restart: always
+    volumes:
+      - staticfiles:/code/static
+    depends_on:
+      - db
+
+  nginx:
+    image: russel07/nginx:latest
+    container_name: nginx
+    volumes:
+      - staticfiles:/static
+    ports:
+      - 80:80
+    depends_on:
+      - web
