@@ -1,6 +1,6 @@
 ![example workflow](https://github.com/russel-07/foodgram-project/actions/workflows/foodgram_workflow.yml/badge.svg)
 
-http://russel.fun
+https://russel.fun
 
 # Foodgram
 
