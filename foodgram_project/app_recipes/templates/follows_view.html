@@ -10,9 +10,13 @@
     <h1 class="main__title">Мои подписки</h1>
 </div>
 <div class="card-list">
-    {% for author in page %}
-        {% include 'include/follow_card.html' %}
-    {% endfor %}
+    {% if page %}
+        {% for author in page %}
+            {% include 'include/follow_card.html' %}
+        {% endfor %}
+    {% else %}
+        <p style="font-family:'Montserrat'; font-size:large; margin-top:25px;">У вас пока нет подписок</p>
+    {% endif %}
 </div>
 {% include 'include/pagination_panel.html' %}
 {% endblock %}

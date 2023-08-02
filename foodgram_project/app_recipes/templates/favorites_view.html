@@ -1,6 +1,11 @@
 {% extends "extends/recipes_base.html" %}
 {% block title %}Избранное{% endblock %}
 {% block main_title %}Избранное{% endblock %}
+{% block favorites %}
+    {% if not page %}
+        <p style="font-family:'Montserrat'; font-size:large; margin-top:25px;">У вас пока нет избранных рецептов</p>
+    {% endif %}
+{% endblock %}
 {% block js %}
     {% load static %}
     <script src="{% static 'js/components/CardList.js' %}"></script>

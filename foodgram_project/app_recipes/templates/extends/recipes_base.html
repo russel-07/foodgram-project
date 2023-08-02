@@ -8,13 +8,17 @@
 {% csrf_token %}
 <div class="main__header">
     <h1 class="main__title">{% block main_title %}<!-- Title -->{% endblock %}</h1>
-    {% include 'include/tags_panel.html' %}
+    {% if page %}
+        {% include 'include/tags_panel.html' %}
+    {% endif %}
 </div>
 {% block follow_button %}<!-- Button -->{% endblock %}
 <div class="card-list">
     {% for recipe in page %}
         {% include 'include/recipe_card.html' %}
     {% endfor %}
+    
+    {% block favorites %}<!-- Favorites -->{% endblock %}
 </div>
 {% include 'include/pagination_panel.html' %}
 {% endblock %}

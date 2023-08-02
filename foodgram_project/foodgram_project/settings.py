@@ -22,7 +22,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'aye8%wm_dvs0&)$ly!rff+(9ak@a_d44r@brozcjud$!(h-lhf'
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -31,14 +30,14 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '158.160.74.170',
+    '51.250.108.20',
     'web',
     ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
-    'http://158.160.74.170',
+    'http://51.250.108.20',
     ]
 
 
@@ -170,19 +169,21 @@ LOGIN_REDIRECT_URL = "index"
 
 SITE_ID = 1
 
-# Эмуляция почтового сервера
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+if IS_LOCAL_ENV:
+    # Эмуляция почтового сервера
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
-# Настройка почтового сервера Yandex
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'russel-1707@yandex.ru'
-EMAIL_HOST_PASSWORD = 'synfhgljzqhrcdkd'
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+else:
+    # Настройка почтового сервера Yandex
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.yandex.ru'
+    EMAIL_PORT = 465
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = False
+    EMAIL_USE_SSL = True
+    DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
 
 '''
@@ -192,12 +193,10 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 SIMPLE_JWT = {
     from datetime import timedelta
     'ACCESS_TOKEN_LIFETIME': timedelta(days=300),
 }
 '''
-
 
 AUTH_USER_MODEL = 'app_users.User'
