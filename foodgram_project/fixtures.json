@@ -2,8 +2,8 @@
 {
   "model": "sites.site",
   "fields": {
-    "domain": "example.com",
-    "name": "example.com"
+    "domain": "russel.fun",
+    "name": "russel.fun"
   }
 },
 {
@@ -18,7 +18,7 @@
     "registration_required": false,
     "sites": [
       [
-        "example.com"
+        "russel.fun"
       ]
     ]
   }
@@ -35,7 +35,7 @@
     "registration_required": false,
     "sites": [
       [
-        "example.com"
+        "russel.fun"
       ]
     ]
   }
@@ -52,7 +52,7 @@
     "registration_required": false,
     "sites": [
       [
-        "example.com"
+        "russel.fun"
       ]
     ]
   }

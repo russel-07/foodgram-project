@@ -171,7 +171,7 @@ LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "index" 
 # LOGOUT_REDIRECT_URL = "index"
 
-SITE_ID = 1
+SITE_ID = 2
 
 if IS_LOCAL_ENV:
     # Эмуляция почтового сервера
