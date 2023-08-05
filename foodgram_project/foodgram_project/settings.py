@@ -40,6 +40,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
     'http://51.250.108.20',
+    'http://russel.fun',
+    'https://russel.fun'
     ]
 
 
