@@ -19,6 +19,8 @@ services:
   web:
     image: russel07/foodgram:latest
     container_name: web
+    env_file:
+      - ./.env
     restart: always
     volumes:
       - staticfiles:/code/foodgram_project/static
