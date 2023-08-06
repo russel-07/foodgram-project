@@ -25,24 +25,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'web',
-    '51.250.108.20',
-    'russel.fun',
-    'www.russel.fun'
-    ]
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(', ')
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost',
-    'http://127.0.0.1',
-    'http://51.250.108.20',
-    'http://russel.fun',
-    'https://russel.fun'
-    ]
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS').split(', ')
 
 
 # Application definition
@@ -100,7 +87,7 @@ WSGI_APPLICATION = 'foodgram_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-IS_LOCAL_ENV = False
+IS_LOCAL_ENV = os.environ.get('IS_LOCAL_ENV')
 
 if IS_LOCAL_ENV:
     DEBUG = True
@@ -113,7 +100,7 @@ if IS_LOCAL_ENV:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': os.environ.get('DB_ENGINE'),
             'NAME': os.environ.get('DB_NAME'),
             'USER': os.environ.get('POSTGRES_USER'),
             'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
@@ -147,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -169,9 +156,8 @@ MEDIAFILES_DIRS = (os.path.join(BASE_DIR, "mediafiles"),)
 
 LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "index" 
-# LOGOUT_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = "index"
 
-SITE_ID = 2
 
 if IS_LOCAL_ENV:
     # Эмуляция почтового сервера
@@ -190,17 +176,6 @@ else:
     DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
 
-'''
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-}
-
-SIMPLE_JWT = {
-    from datetime import timedelta
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=300),
-}
-'''
-
 AUTH_USER_MODEL = 'app_users.User'
+
+SITE_ID = 2
