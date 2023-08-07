@@ -159,21 +159,16 @@ LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
 
 
-if IS_LOCAL_ENV:
-    # Эмуляция почтового сервера
-    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-    EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
-else:
-    # Настройка почтового сервера Yandex
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.yandex.ru'
-    EMAIL_PORT = 465
-    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-    EMAIL_USE_TLS = False
-    EMAIL_USE_SSL = True
-    DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+# Настройка почтового сервера Yandex
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
 
 AUTH_USER_MODEL = 'app_users.User'
