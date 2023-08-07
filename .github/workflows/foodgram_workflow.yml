@@ -56,7 +56,7 @@ jobs:
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
           cd foodgram
-          FILE=env_test
+          FILE=.env
           if [ -f "$FILE" ]
           then
             echo "$FILE exists and will removed"
