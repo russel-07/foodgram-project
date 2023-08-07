@@ -67,8 +67,6 @@ jobs:
           echo "Add new $FILE"
           touch $FILE
           echo SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }} >> $FILE
-          echo DEBUG=${{ secrets.DJANGO_DEBUG }} >> $FILE
-          echo IS_LOCAL_ENV=${{ secrets.DJANGO_IS_LOCAL_ENV }} >> $FILE
           echo ALLOWED_HOSTS=${{ secrets.DJANGO_ALLOWED_HOSTS }} >> $FILE
           echo CSRF_TRUSTED_ORIGINS=${{ secrets.DJANGO_CSRF_TRUSTED_ORIGINS }} >> $FILE
           echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> $FILE

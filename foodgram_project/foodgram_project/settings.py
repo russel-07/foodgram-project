@@ -156,7 +156,7 @@ MEDIAFILES_DIRS = (os.path.join(BASE_DIR, "mediafiles"),)
 
 LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "index" 
-LOGOUT_REDIRECT_URL = "index"
+#LOGOUT_REDIRECT_URL = "index"
 
 
 if IS_LOCAL_ENV:
@@ -178,4 +178,4 @@ else:
 
 AUTH_USER_MODEL = 'app_users.User'
 
-SITE_ID = 1
+SITE_ID = 2
