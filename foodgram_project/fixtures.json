@@ -186,7 +186,7 @@
 {
   "model": "app_users.user",
   "fields": {
-    "password": "pbkdf2_sha256$600000$BgWjPPcVEHHL9r4XxLsYod$qJjQdAa59cEDqSQw1ZahzDiAByTNYE7X3b8MiRjdy00=",
+    "password": "pbkdf2_sha256$600000$8qds1hLe5X3FCPVzVXoWsx$HJXxR8cj1XqqhM6FSpAOPTNqc8pbNXvMH0grSIB9qlg=",
     "last_login": "2023-06-30T18:10:44.585Z",
     "is_superuser": true,
     "username": "admin",
