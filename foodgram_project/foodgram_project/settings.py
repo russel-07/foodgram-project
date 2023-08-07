@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+DEBUG = False
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(', ')
 
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'foodgram_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-IS_LOCAL_ENV = os.environ.get('IS_LOCAL_ENV')
+IS_LOCAL_ENV = False
 
 if IS_LOCAL_ENV:
     DEBUG = True
