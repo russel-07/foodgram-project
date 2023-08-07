@@ -178,4 +178,4 @@ else:
 
 AUTH_USER_MODEL = 'app_users.User'
 
-SITE_ID = 5
+SITE_ID = 6
